@@ -1,0 +1,61 @@
+@keyframes loading{
+  0%{
+
+  }50%{
+     transform: rotate(180deg)
+   }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+.transition-end{
+  animation: transition-end 1s 0s ease-in;
+}
+@keyframes transition-end{
+  0%{
+    opacity: 100%;
+  }100%{
+     opacity: 0;
+   }
+}
+.transition-start{
+  animation: transition-start 2s 0s ease-in-out;
+}
+@keyframes transition-start{
+  0%{
+    opacity: 0;
+  }100%{
+     opacity: 100%!important;
+   }
+}
+
+@keyframes loadingText {
+  0%{
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50%{
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100%{
+    transform: scale(1);
+    opacity: .4;
+  }
+}
+@keyframes Extends {
+  from{width: 0}
+}
+
+@keyframes pointsShake {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25%);
+  }
+  100% {
+    transform: unset;
+  }
+}

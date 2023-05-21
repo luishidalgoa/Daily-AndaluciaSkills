@@ -1,0 +1,3 @@
+@mixin bars($angle,$translate...){
+  transform: rotate($angle) translate($translate...);
+}

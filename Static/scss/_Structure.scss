@@ -1,0 +1,173 @@
+//LOGIN
+#load { //SISTEMA DE CARGA
+  width: 20em;
+  height: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span center {
+    letter-spacing: 3px;
+    font-family: 'Lora', serif;
+  }
+
+  img {
+    width: 15em !important
+  }
+
+  #LoadingText {
+    padding: 0;
+    animation: loadingText 1.5s 0s ease-in-out infinite;
+
+    span {
+      margin-left: 30%;
+      animation: Extends 2s steps(30);
+      overflow: hidden;
+      text-shadow: 0 1px 1px #bfbfbf,
+      1px 4px 10px #999999;
+      font-family: 'Roboto Slab', serif;
+      display: flex;
+      width: 12ch;
+      letter-spacing: 0px;
+      padding: 0;
+      font-style: italic;
+
+      p {
+        font-weight: 800;
+        animation: pointsShake 1.5s infinite;
+        letter-spacing: 3px;
+      }
+
+      :nth-child(1) {
+        margin-left: 5px;
+        animation-delay: .0s;
+      }
+
+      :nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      :nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  .loading {
+    width: 5em;
+    height: 5em;
+    transform: translate(-10px, 100px);
+    border: 2px solid gray;
+    border-radius: 50px;
+    padding: 0;
+  }
+
+  .loading::before {
+    position: absolute;
+    content: '';
+    border-top: 3px solid #007bff;
+    margin-left: -2px;
+    margin-top: -1.5px;
+    border-radius: 50%;
+    width: 5rem;
+    height: 5em;
+    animation: loading 2s cubic-bezier(0.2, 0.2, 0, 0.1) infinite;
+  }
+}
+
+//Menu Bars
+header {
+  height: 70px;
+  /**
+  Menu lateral izquierdo
+   */
+  #bars {
+    span {
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      min-width: 100%;
+      min-height: 2px;
+      max-width: 100%;
+      max-height: 2px;
+      background-color: black;
+    }
+
+    /**
+    Cuando se clicke sobre el #bars se activara esta animación
+     */
+    .bars_active:nth-child(1) {
+      @include bars(45deg, 3px, 7px)
+    }
+
+    .bars_active:nth-child(3) {
+      @include bars(-45deg, -2px, -3px)
+    }
+  }
+}
+
+#TaskContainer {
+  .task {
+    span{
+      width: auto;
+      white-space: nowrap;
+      overflow: auto;
+    }
+  }
+}
+//PROVISIONAL
+#calendar{
+  max-width: 30px;
+  margin-left: auto;
+}
+input[type="checkbox"]:checked{
+  background-color: #555;
+}
+input[type="checkbox"]{
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  appearance: none;
+
+}
+.is-dragging {
+  scale: 0.95;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+  background-color: rgb(203, 203, 203)!important;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+html{
+  height: 100vh;
+}
+body{
+  height: 100%;
+}
+
+form {
+  flex-wrap: nowrap;
+  button {
+    background-color: unset;
+    border: 0px;
+    padding: 4px;
+  }
+  input[type="text"]{
+    width: 100%!important;
+    border: 0!important;
+    outline: none;
+    overflow: auto;
+    padding-right: 5px;
+  }
+  svg[viewBox="0 0 36 36"]{
+    margin-left: auto!important;
+    transform: translateX(-5px);
+  }
+}
