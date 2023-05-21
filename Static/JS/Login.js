@@ -36,7 +36,7 @@ class Login {
                     list.loadEvents();
                     list.loadLocalStorage()
                 }, 1000);
-            }, 100);//3500
+            }, 3500);//3500
         }
     }
     /**

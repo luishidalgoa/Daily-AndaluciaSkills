@@ -18,22 +18,58 @@ class List {
         }, []);
     }
 
+    prueba() {
+        //Forma clasica de añadir un elemento a un array
+        //sin modificar el original
+        const animals = ['🐶', '😺', '🐷']
+        const newanimals = animals.slice()
+        newanimals.splice(1,0,'🐼')
+        console.log(newanimals) // ['🐶','🐼', '😺', '🐷']
+
+        //ECMAScript2023
+        //topSpliced(startIndex,deleteCount,item1,item2,itemN)
+        const newAnimals2= animals.toSpliced(1,0,'🐼')
+        console.log(newanimals2)//['🐶','🐼', '😺', '🐷']
+    }
+
     /**
      * Cuando se cree una tarea. este metodo lo marsheara al localStorage
      */
     save() {
-        localStorage.setItem(this.name,JSON.stringify(this.tasks))
+        localStorage.setItem(this.name, JSON.stringify(this.tasks))
+    }
+
+    /**
+     * Este metodo sera ejecutado cuando alteremos el orden de las tareas. de modo que cuando las reorganice el
+     * usuario. estas guarden su nueva posicion designada
+     * @param aux NoteList con todos las tareas las cuales vamos a marshear a tipo Task
+     */
+    saveAll(aux) {
+        this.tasks = []
+        aux.forEach((value) => {
+            const id = value.id.replace(/^Task_/, '')
+            const text = value.textContent.replace(/\n+/g, '\n').trim()
+            const note = ""
+            const date = ""
+            this.tasks.push(new Task(id, text, note, date))
+        })
+        localStorage.setItem(this.name, JSON.stringify(this.tasks))
     }
 
     /**
      * Metodo que se encargara de cargar lo necesario del localStorage.
      * Cargara: Las tareas.
+     * Posteriormente cargara a cada tarea le cargara todos los eventos propios de las tareas
      */
     loadLocalStorage() {
         if (localStorage.getItem(this.name) !== null) {
             const aux = JSON.parse(localStorage.getItem(this.name));
             for (const task of aux) {
-                this.tasks.push(new Task(task.id,task.Title,"",""))
+                const newTask = new Task(task.id, task.Title, "", "")
+                this.tasks.push(newTask)
+                setTimeout(() => {
+                    newTask.initializeEvents()
+                }, 1)
             }
             this.loadTask()
         }
@@ -46,9 +82,9 @@ class List {
      * eventos
      */
     loadTask() {
-        document.querySelector('#TaskContainer').innerHTML=""
+        document.querySelector('#TaskContainer').innerHTML = "<div></div>"
         for (const task of this.tasks) {
-            document.querySelector('#TaskContainer').innerHTML+= task.getHtml()
+            document.querySelector('#TaskContainer').innerHTML += task.getHtml()
         }
         updateDraggables()
     }
@@ -93,15 +129,15 @@ class List {
 
     getHtml() {
         return `
-        <div id="contains" class="p-0 h-100 bg-coffe">
-            <header class="p-2 bg-white d-flex justify-content-between align-items-center shadow">
-                <div id="bars" class="d-flex flex-column justify-content-center" style="width: 30px; height: 40px;">
+        <div id="contains" class="p-0 w-100 h-100 bg-coffe">
+            <header class="p-2 bg-white d-flex justify-content-between align-items-center">
+                <div id="bars" class="d-flex flex-column justify-content-center" style="width: 30px; height: 40px; margin-left: 10px">
                     <span class="d-block"
-                        style="min-width: 100%;min-height: 2px;max-width: 100%;max-height: 2px; background-color: black;"></span>
+                        style="min-width: 100%;min-height: 3px;max-width: 100%;border-radius: 9px; background-color: black;"></span>
                     <span class="d-block"
-                        style="min-width: 100%;min-height: 2px;max-width: 100%;max-height: 2px; background-color: black; margin-top: 6px;"></span>
+                        style="min-width: 100%;min-height: 3px;max-width: 100%;border-radius: 9px; background-color: black; margin-top: 6px;"></span>
                     <span class="d-block"
-                        style="min-width: 100%;min-height: 2px;max-width: 100%;max-height: 2px; background-color: black; margin-top: 6px;"></span>
+                        style="min-width: 100%;min-height: 3px;max-width: 100%; border-radius: 9px; background-color: black; margin-top: 6px;"></span>
                 </div>
                 <div class="rounded-circle overflow-hidden bg-secondary img-content h-100" id="like">
                     <img src="../Static/images/User.png" class="img-fluid img-zoom h-100" alt="">
@@ -125,7 +161,7 @@ class List {
                             </g>
                         </svg>
                     </button>
-                    <input type="text">
+                    <input type="text" placeholder="New task...">
                     <svg style="height: 2em;" class="mt-1" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M23.25 25.6496C23.25 24.7496 22.65 24.1496 21.75 24.1496H6.6C5.4 24.1496 4.5 23.2496 4.5 22.0496V13.9496C4.5 12.7496 5.4 11.8496 6.6 11.8496H21.75C22.65 11.8496 23.25 11.2496 23.25 10.3496C23.25 9.44961 22.65 8.84961 21.75 8.84961H6.6C3.75 8.84961 1.5 11.0996 1.5 13.9496V22.0496C1.5 24.8996 3.75 27.1496 6.6 27.1496H21.75C22.5 27.1496 23.25 26.5496 23.25 25.6496Z"
@@ -136,6 +172,7 @@ class List {
                     </svg>
                 </form>
                 <div id="TaskContainer" class="d-flex flex-column gap-3 swim-lane">
+               
                 </div>
             </section>
         </div>
