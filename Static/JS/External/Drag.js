@@ -9,7 +9,7 @@ function updateDraggables(){
         });
         task.addEventListener("dragend", () => {
             task.classList.remove("is-dragging");
-            constrollerList.list.NodeList_toTask(document.querySelectorAll('.task'));
+            list.saveAll(document.querySelectorAll('.task'));
         });
     });
 
