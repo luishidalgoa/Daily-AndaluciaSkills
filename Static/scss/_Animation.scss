@@ -59,3 +59,56 @@
     transform: unset;
   }
 }
+//---------------------ANIMACION CHECK-----------
+@-moz-keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+
+@-webkit-keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+
+@-o-keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+
+@keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+//-------------------------------------------------------------------------
+//borde para inputs con 2 tonalidades de azul. Agrega efecto de seleccionado
+.form_active{
+  box-shadow: 0 0 0 2px #174ea55f, 0 0 0 5px #3b83f65f;
+}
