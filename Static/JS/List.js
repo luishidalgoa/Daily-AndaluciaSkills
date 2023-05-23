@@ -5,7 +5,7 @@ class List {
     }
 
     /**
-     * Filtrara entre todas las tareas de la lista. Segun cumpla con el texto filtrado
+     * Filtrará entre todas las tareas de la lista. Seguin cumpla con el texto filtrado
      * @param text
      * @returns {*}
      */
@@ -18,39 +18,68 @@ class List {
         }, []);
     }
 
+    deleteTasks() {
+
+
+    }
+    
     /**
-     * Cuando se cree una tarea. este metodo lo marsheara al localStorage
+     * Cuando se cree una tarea. este methods lo marsheara al localStorage
      */
     save() {
-        localStorage.setItem(this.name,JSON.stringify(this.tasks))
+        localStorage.setItem(this.name, JSON.stringify(this.tasks))
     }
 
     /**
-     * Metodo que se encargara de cargar lo necesario del localStorage.
-     * Cargara: Las tareas.
+     * Podría llamarse también "SaveALL()"
+     * Converter una lista de elementos tipo .task en objetos Task()
+     * usuario. estas guarden su nueva position designada
+     * @param aux NoteList con todos las tareas las cuales vamos a marshier a tipo Task
+     */
+    NodeList_toTask(aux) {
+        this.tasks = []
+        aux.forEach((value) => {
+            const id = value.id.replace(/^Task_/, '')
+            const text = value.textContent.replace(/\n+/g, '\n').trim()
+            const note = ""
+            const date = ""
+            this.tasks.push(new Task(id, text, note, date))
+        })
+        localStorage.setItem(this.name, JSON.stringify(this.tasks))
+    }
+
+    /**
+     * Se encargará de cargar lo necesario del localStorage.
+     * Cargará: Las tareas.
+     * Posteriormente, cargará a cada tarea le cargará todos los eventos propios de las tareas
      */
     loadLocalStorage() {
         if (localStorage.getItem(this.name) !== null) {
             const aux = JSON.parse(localStorage.getItem(this.name));
             for (const task of aux) {
-                this.tasks.push(new Task(task.id,task.Title,"",""))
+                const newTask = new Task(task.id, task.Title, "", "")
+                this.tasks.push(newTask)
+                setTimeout(() => {
+                    newTask.initializeEvents()
+                }, 1)
             }
-            this.loadTask()
+            this.updateTasksContainer()
         }
     }
 
     /**
      * Cuando creemos una nueva tarea o carguemos todas las tareas del localStorage.
-     * Este metodo sera lanzado para insertar la tarea en el DOM.
-     * posteriormente actualizara los objetos que son draggeables dentro de TaskContainer para agregarle
+     * Este methods será lanzado para insertar la tarea en el DOM.
+     * posteriormente, actualizará los objetos que son draggable dentro de TaskContainer para agregarle
      * eventos
      */
-    loadTask() {
-        document.querySelector('#TaskContainer').innerHTML=""
+    updateTasksContainer() {
+        document.querySelector('#TaskContainer').innerHTML = "<div></div>"
         for (const task of this.tasks) {
-            document.querySelector('#TaskContainer').innerHTML+= task.getHtml()
+            document.querySelector('#TaskContainer').innerHTML += task.getHtml()
         }
         updateDraggables()
+
     }
 
     /**
@@ -59,15 +88,24 @@ class List {
      * @returns {Task}
      */
     newTask(title) {
-        let autoIncrement = 0;
-        while (this.tasks.some(task => task.id === autoIncrement)) {
-            autoIncrement++;
-        }
-        const result = new Task(autoIncrement, title, "", "");
+        const result = new Task(this.newID(), title, "", "");
         this.tasks.push(result)
         this.save()
-        this.loadTask()
+        this.updateTasksContainer()
         return result;
+    }
+
+    /**
+     * Genera un nuevo id auto incremental. Mientras exista un id, el puntero interno avanzara en +1
+     * @returns {number} el valor del puntero el cual no lo posee ninguna otra tarea
+     */
+    newID(){
+        let autoIncrement = 0;
+        while (this.tasks.some(task => task.id == autoIncrement)) { //prefiero usar == en lugar === para que me lo compare en cualquier tipo de dato evitando asi errores
+            console.log(autoIncrement)
+            autoIncrement++;
+        }
+        return autoIncrement;
     }
 
     barsActive() {
@@ -78,30 +116,55 @@ class List {
 
 
     /**
-     * Este metodo creara todos los eventos necesarios en el esqueleto html una vez insertado en el cuerpo
-     * de una pagina web
+     * Este methods creará todos los eventos necesarios en el esqueleto html una vez insertado en el cuerpo
+     * de una página web
      */
-    loadEvents() {
+    initializeEvents() {
         //Buscamos todos los elementos interactivos de la pagina
         this.menu_bars = document.getElementById('bars');
-        this.add = document.querySelector('section form button[type="submit"]')
-        this.add.addEventListener('click', () => {
-            return this.newTask(this.add.parentElement.querySelector('input[type="text"]').value)
-        });
+
         this.menu_bars.addEventListener('click', this.barsActive.bind(this));
+
+        const formAdd = document.querySelector('footer form') //Formulario crear tarea
+
+        formAdd.querySelector('button[type="submit"]').addEventListener('click',
+            () => this.newTask(formAdd.querySelector('input[type="text"]').value));
+
+        formAdd.querySelector('input[type="text"]').addEventListener('focus', () => {
+            formAdd.classList.add('form_active')
+        })
+
+        formAdd.querySelector('input[type="text"]').addEventListener('focusout', () => {
+            formAdd.classList.remove('form_active')
+        })
+        this.delete();
+    }
+    delete(){
+        const btnDelete= document.querySelector('nav ul #delete')
+            btnDelete.addEventListener('click',()=>{
+                this.tasks.forEach((value,initialIndex)=>{
+                    if(document.getElementById('Task_'+value.id).querySelector('input[type="checkbox"]:checked')){
+                        console.log(initialIndex)
+                        this.tasks.splice(initialIndex,1)
+                    }
+                    initialIndex++;
+                },0)
+                this.updateTasksContainer()
+                this.NodeList_toTask(document.querySelectorAll('.task'))
+            })
     }
 
     getHtml() {
         return `
-        <div id="contains" class="p-0 h-100 bg-coffe">
-            <header class="p-2 bg-white d-flex justify-content-between align-items-center shadow">
-                <div id="bars" class="d-flex flex-column justify-content-center" style="width: 30px; height: 40px;">
+        <div id="contains" class="p-0 w-100 h-100 bg-clear">
+            <header class="p-2 bg-white d-flex justify-content-between align-items-center">
+                <div id="bars" class="d-flex flex-column justify-content-center" style="width: 30px; height: 40px; margin-left: 10px">
                     <span class="d-block"
-                        style="min-width: 100%;min-height: 2px;max-width: 100%;max-height: 2px; background-color: black;"></span>
+                        style="min-width: 100%;min-height: 3px;max-width: 100%;border-radius: 9px; background-color: black;"></span>
                     <span class="d-block"
-                        style="min-width: 100%;min-height: 2px;max-width: 100%;max-height: 2px; background-color: black; margin-top: 6px;"></span>
+                        style="min-width: 100%;min-height: 3px;max-width: 100%;border-radius: 9px; background-color: black; margin-top: 6px;"></span>
                     <span class="d-block"
-                        style="min-width: 100%;min-height: 2px;max-width: 100%;max-height: 2px; background-color: black; margin-top: 6px;"></span>
+                        style="min-width: 100%;min-height: 3px;max-width: 100%; border-radius: 9px; background-color: black; margin-top: 6px;"></span>
                 </div>
                 <div class="rounded-circle overflow-hidden bg-secondary img-content h-100" id="like">
                     <img src="../Static/images/User.png" class="img-fluid img-zoom h-100" alt="">
@@ -112,8 +175,18 @@ class List {
                         fill="black" />
                 </svg>
             </header>
-            <section class="d-flex flex-column p-4 gap-7 ">
-                <form action="javascript:void(0);" class="d-flex rounded-4 bg-white">
+            <section class="d-flex flex-column p-4">
+                <nav>
+                    <ul class="">
+                        <li id="delete">Delete</li>
+                    </ul>
+                </nav>
+                <div id="TaskContainer" class="d-flex flex-column gap-3 swim-lane">
+                
+                </div>
+            </section>
+            <footer class="bg-clear">
+                <form action="javascript:void(0);" class="d-flex bg-white">
                     <button type="submit" class="rounded-1">
                         <svg style="height: 2em;" viewBox="0 0 24 24">
                             <g data-name="Layer 2">
@@ -125,20 +198,25 @@ class List {
                             </g>
                         </svg>
                     </button>
-                    <input type="text">
+                    <input type="text" placeholder="New task...">
                     <svg style="height: 2em;" class="mt-1" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M23.25 25.6496C23.25 24.7496 22.65 24.1496 21.75 24.1496H6.6C5.4 24.1496 4.5 23.2496 4.5 22.0496V13.9496C4.5 12.7496 5.4 11.8496 6.6 11.8496H21.75C22.65 11.8496 23.25 11.2496 23.25 10.3496C23.25 9.44961 22.65 8.84961 21.75 8.84961H6.6C3.75 8.84961 1.5 11.0996 1.5 13.9496V22.0496C1.5 24.8996 3.75 27.1496 6.6 27.1496H21.75C22.5 27.1496 23.25 26.5496 23.25 25.6496Z"
-                            fill="black" />
+                            fill="#003aff" />
                         <path
                             d="M29.3992 8.85H28.0492V6H30.2992C31.1992 6 31.7992 5.4 31.7992 4.5C31.7992 3.6 31.1992 3 30.2992 3H22.9492C22.0492 3 21.4492 3.6 21.4492 4.5C21.4492 5.4 22.0492 6 22.9492 6H25.1992V30H22.9492C22.0492 30 21.4492 30.6 21.4492 31.5C21.4492 32.4 22.0492 33 22.9492 33H30.2992C31.1992 33 31.7992 32.4 31.7992 31.5C31.7992 30.6 31.1992 30 30.2992 30H28.0492V27.15H29.3992C32.2492 27.15 34.4992 24.9 34.4992 22.05V13.95C34.4992 11.1 32.2492 8.85 29.3992 8.85ZM31.4992 22.05C31.4992 23.25 30.5992 24.15 29.3992 24.15H28.0492V11.85H29.3992C30.5992 11.85 31.4992 12.75 31.4992 13.95V22.05Z"
-                            fill="black" />
+                            fill="#003aff" />
                     </svg>
                 </form>
-                <div id="TaskContainer" class="d-flex flex-column gap-3 swim-lane">
-                </div>
-            </section>
+            </footer>
         </div>
         `
+    }
+
+    /**
+     * Elemento pie de pagina que habilitara la opcion de eliminar la lista de tareas seleccionada
+     */
+    getDeleteTaskHtml() {
+
     }
 }

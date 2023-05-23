@@ -9,9 +9,11 @@
 }
 .bg-clear{
   filter: blur(100%);
-  background-color:rgba(240, 240, 240, 1)!important;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color:rgb(250, 249, 248)!important;
 }
 .bg-coffe{
-  background-color: rgba(242, 217, 165, 0.2);
+  background-color: rgba(242, 217, 165, 0.3);
+}
+.bg-white{
+  background-color: white;
 }

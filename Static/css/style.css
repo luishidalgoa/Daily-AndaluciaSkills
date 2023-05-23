@@ -1,18 +1,23 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap");
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #load {
   width: 20em;
   height: fit-content;
-  position: absolute;
-  left: 50%;
-  top: 35%;
-  transform: translate(-50%, -50%);
+  top: 15%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 #load span center {
+  text-rendering: optimizeLegibility;
   letter-spacing: 3px;
   font-family: "Lora", serif;
 }
@@ -24,6 +29,7 @@
   animation: loadingText 1.5s 0s ease-in-out infinite;
 }
 #load #LoadingText span {
+  text-rendering: optimizeLegibility;
   margin-left: 30%;
   animation: Extends 2s steps(30);
   overflow: hidden;
@@ -72,6 +78,7 @@
 
 header {
   height: 70px;
+  background-color: #67c7c3;
   /**
   Menu lateral izquierdo
    */
@@ -83,10 +90,6 @@ header #bars {
 }
 header #bars span {
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-  min-width: 100%;
-  min-height: 2px;
-  max-width: 100%;
-  max-height: 2px;
   background-color: black;
 }
 header #bars .bars_active:nth-child(1) {
@@ -96,40 +99,115 @@ header #bars .bars_active:nth-child(3) {
   transform: rotate(-45deg) translate(-2px, -3px);
 }
 
-#TaskContainer .task span {
-  width: auto;
-  white-space: nowrap;
-  overflow: auto;
+#TaskContainer {
+  margin-bottom: 45px;
 }
-
-#calendar {
-  max-width: 30px;
-  margin-left: auto;
-}
-
-input[type=checkbox]:checked {
-  background-color: #555;
-}
-
-input[type=checkbox] {
-  border: 2px solid #ccc;
-  border-radius: 20px;
-  min-width: 20px;
-  min-height: 20px;
-  max-width: 20px;
-  max-height: 20px;
-  appearance: none;
-}
-
-.is-dragging {
+#TaskContainer .is-dragging {
   scale: 0.95;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
-  background-color: rgb(203, 203, 203) !important;
+  background-color: rgba(234, 234, 234, 0.6) !important;
 }
-
-* {
-  padding: 0;
+#TaskContainer :hover > .checkbox-wrapper-12 input {
+  display: block !important;
+}
+#TaskContainer :hover {
+  background-color: rgb(240, 240, 240) !important;
+}
+#TaskContainer .task, #TaskContainer .task * {
+  transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+#TaskContainer .task {
+  border-radius: 0.8rem;
+  box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
+}
+#TaskContainer .task #calendar {
+  max-width: 30px;
+  min-width: 30px;
+}
+#TaskContainer .task span {
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+  overflow: auto;
+  text-rendering: optimizeLegibility;
+}
+#TaskContainer .task span:focus-visible {
+  outline: none;
+  border: unset;
+}
+#TaskContainer .task .checkbox-wrapper-12 {
+  position: relative;
+  width: 24px !important;
+}
+#TaskContainer .task .checkbox-wrapper-12 > svg {
+  position: absolute;
+  top: -130%;
+  left: -170%;
+  width: 110px;
+  pointer-events: none;
+}
+#TaskContainer .task .checkbox-wrapper-12 * {
+  box-sizing: border-box;
+}
+#TaskContainer .task .checkbox-wrapper-12 input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
   margin: 0;
+}
+#TaskContainer .task .checkbox-wrapper-12 input[type=checkbox]:focus {
+  outline: 0;
+}
+#TaskContainer .task .checkbox-wrapper-12 .cbx {
+  width: 24px;
+  height: 24px;
+  top: 88px;
+  left: 88px;
+}
+#TaskContainer .task .checkbox-wrapper-12 .cbx input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #bfbfc0;
+  border-radius: 50%;
+}
+#TaskContainer .task .checkbox-wrapper-12 .cbx label {
+  width: 24px;
+  height: 24px;
+  background: none;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+  pointer-events: none;
+}
+#TaskContainer .task .checkbox-wrapper-12 .cbx svg {
+  position: absolute;
+  top: 5px;
+  left: 4px;
+  z-index: 1;
+  pointer-events: none;
+}
+#TaskContainer .task .checkbox-wrapper-12 .cbx svg path {
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 19;
+  stroke-dashoffset: 19;
+  transition: stroke-dashoffset 0.3s ease;
+  transition-delay: 0.2s;
+}
+#TaskContainer .task .checkbox-wrapper-12 .cbx input:checked + label {
+  animation: splash-12 0.6s ease forwards;
+}
+#TaskContainer .task .checkbox-wrapper-12 .cbx input:checked + label + svg path {
+  stroke-dashoffset: 0;
 }
 
 html {
@@ -137,25 +215,39 @@ html {
 }
 
 body {
-  height: 100%;
+  height: fit-content;
 }
 
-form {
-  flex-wrap: nowrap;
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
 }
-form button {
+footer form {
+  border-radius: 0.8rem;
+  transition: all 0.5s;
+  width: 90%;
+  max-height: 45px;
+  flex-wrap: nowrap;
+  box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
+}
+footer form button {
   background-color: unset;
-  border: 0px;
+  border: 0;
   padding: 4px;
 }
-form input[type=text] {
+footer form input[type=text] {
   width: 100% !important;
   border: 0 !important;
   outline: none;
   overflow: auto;
   padding-right: 5px;
 }
-form svg[viewBox="0 0 36 36"] {
+footer form svg[viewBox="0 0 36 36"] {
   margin-left: auto !important;
   transform: translateX(-5px);
 }
@@ -281,27 +373,27 @@ form svg[viewBox="0 0 36 36"] {
 }
 
 .rounded-1 {
-  border-radius: 0.6rem !important;
+  border-radius: 0.2rem !important;
 }
 
 .rounded-2 {
-  border-radius: 0.9rem !important;
+  border-radius: 0.4rem !important;
 }
 
 .rounded-3 {
-  border-radius: 1.2rem !important;
+  border-radius: 0.8rem !important;
 }
 
 .rounded-4 {
-  border-radius: 0.9rem !important;
+  border-radius: 1.2rem !important;
 }
 
 .rounded-5 {
-  border-radius: 1.8rem !important;
+  border-radius: 1.5rem !important;
 }
 
 .rounded-6 {
-  border-radius: 2.1rem !important;
+  border-radius: 1.9rem !important;
 }
 
 .o-0 {
@@ -374,6 +466,50 @@ form svg[viewBox="0 0 36 36"] {
     transform: unset;
   }
 }
+@-moz-keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+@-webkit-keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+@-o-keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+@keyframes splash-12 {
+  40% {
+    background: #003cf9;
+    box-shadow: 0 -18px 0 -8px #003cf9, 16px -8px 0 -8px #003cf9, 16px 8px 0 -8px #003cf9, 0 18px 0 -8px #003cf9, -16px 8px 0 -8px #003cf9, -16px -8px 0 -8px #003cf9;
+  }
+  100% {
+    background: #003cf9;
+    box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+  }
+}
+.form_active {
+  box-shadow: 0 0 0 2px rgba(23, 78, 165, 0.3725490196), 0 0 0 5px rgba(59, 131, 246, 0.3725490196);
+}
+
 .glass-light {
   backdrop-filter: blur(2px);
   background-color: rgba(255, 255, 255, 0.5) !important;
@@ -387,12 +523,15 @@ form svg[viewBox="0 0 36 36"] {
 
 .bg-clear {
   filter: blur(100%);
-  background-color: rgb(240, 240, 240) !important;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: rgb(250, 249, 248) !important;
 }
 
 .bg-coffe {
-  background-color: rgba(242, 217, 165, 0.2);
+  background-color: rgba(242, 217, 165, 0.3);
+}
+
+.bg-white {
+  background-color: white;
 }
 
 /*# sourceMappingURL=style.css.map */
