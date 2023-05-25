@@ -6,5 +6,7 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-./.idea/
-./Desing/
+.idea/
+/Desing/
+/idea/
+/Diagrama.mdj/
