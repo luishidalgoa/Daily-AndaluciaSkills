@@ -1,13 +1,12 @@
 class ControllerList{
     constructor(name) {
-        this.list=new List(name,ListDAO.searchList(name));
+        this.list=ListDAO.searchList(name);
     }
 
     /**
      * Se encarga de realizar todo el procedimiento para cargar correctamente cualquier lista
      * de tareas . De modo que primero insertara la base HTML para posteriormente cargar todas las tareas
      * asi como inicializar los eventos pertinentes de la lista de tareas
-     * @param body
      */
     loadList(body){
         body.innerHTML += this.list.getHtml();
@@ -73,6 +72,7 @@ class ControllerList{
 
         this.addTask()
         this.deleteTasks(animDelete);
+        this.searchTasks()
     }
 
     /**
@@ -101,7 +101,7 @@ class ControllerList{
      * Evento eliminará las tareas seleccionadas por el usuario. La filosofía de este methods es devolver en forma de array
      * todas las tareas que no tengan activado el check. de modo que se eliminaran automáticamente todas aquellas que
      * tengan el check
-     * @param animItem animacion que se ejecutara cuando se cumpla la condicion de que 
+     * @param animItem animación que se ejecutara cuando se cumpla la condición de que
      */
     deleteTasks(animItem){
         const btnDelete= document.querySelector('nav ul #delete')
@@ -110,7 +110,7 @@ class ControllerList{
                 animItem.play()
                 animItem.addEventListener('complete', function() {
                     animItem.goToAndStop(0);
-                    document.querySelector('nav').classList.remove('navActive')
+                    document.querySelector('nav #delete').classList.remove('navActive')
                 });
             }
 
@@ -122,6 +122,23 @@ class ControllerList{
             })
             this.updateTasksContainer()
             TasksDAO.saveAll(document.querySelectorAll('.task'),this.list.name)
+        })
+    }
+
+    /**
+     * EVENTO:
+     * Buscará entre todas las tareas de la lista seleccionada. Devolviendo un array con exclusivamente los elementos 
+     * filtrados. Este método hará consultas de filtrado al TaskDAO
+     */
+    searchTasks(){
+        const search = document.querySelector('#search')
+        search.querySelector('div input[type="search"]').addEventListener('change',()=>{
+            document.querySelector('#TaskContainer').innerHTML="<div></div>"
+            const text = search.querySelector('div input[type="search"]').value;
+            const result= TasksDAO.filter(text,this.list.name)
+            for (const aux of result) {
+                document.querySelector('#TaskContainer').innerHTML += aux.getHtml()
+            }
         })
     }
 }

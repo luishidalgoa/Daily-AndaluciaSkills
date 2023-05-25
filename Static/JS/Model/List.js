@@ -29,7 +29,7 @@ class List {
                         style="min-width: 100%;min-height: 3px;max-width: 100%; border-radius: 9px; background-color: black; margin-top: 6px;"></span>
                 </div>
                 <div class="rounded-circle overflow-hidden bg-secondary img-content h-100" id="like">
-                    <img src="../Static/images/User.png" class="img-fluid img-zoom h-100" alt="">
+                    <img src="../../../Static/images/User.png" class="img-fluid img-zoom h-100" alt="">
                 </div>
                 <svg style="height:2.2em;" id="delete" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -42,13 +42,16 @@ class List {
                 
             </div>
             <section class="d-flex flex-column p-4">
-                <nav class="">
-                    <ul class="d-flex flex-row-reverse ml-auto">
-                        <li id="delete" class="d-flex gap-1">
+                <nav class="d-flex navActive" style="position:relative;width: 100%">
+                    <ul class="d-flex flex-row-reverse col-12 justify-content-start" style="max-width: 100%">
+                        <li id="delete" class="d-flex">
                             <div class="container-svg"></div>
                         </li>
-                        <li class="d-flex gap-1" id="search">
-                            <div></div>
+                        <li class="d-flex justify-content-start" id="search" style="width: calc(20px + 50vw);">
+                            <div style="width: 200px;max-width: 100%;max-height: 100%;" class="shadow rounded-3">
+                                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                                <input placeholder="Search" type="search" class="input">
+                            </div>
                         </li>
                     </ul>
                 </nav>

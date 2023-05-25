@@ -257,31 +257,66 @@ footer form svg[viewBox="0 0 36 36"] {
   transform: translateX(-5px);
 }
 
-nav {
-  height: 0;
-  max-height: 40px;
-  transition: height 0.4s 0s linear;
-}
 nav ul {
   padding: 0;
   margin-bottom: 0;
 }
+nav ul #search div {
+  display: flex;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+  max-width: 190px;
+}
+nav ul #search div .input {
+  width: 100%;
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem 0 2.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: 0.3s ease;
+}
+nav ul #search div .input::placeholder {
+  color: #9e9ea7;
+}
+nav ul #search div .input:focus, nav ul #search div input:hover {
+  outline: none;
+  cursor: text;
+  box-shadow: 0 0 0 2px rgba(23, 78, 165, 0.3725490196), 0 0 0 5px rgba(59, 131, 246, 0.3725490196);
+  background-color: #fff;
+}
+nav ul #search div .icon {
+  position: absolute;
+  left: 1rem;
+  fill: #9e9ea7;
+  width: 1rem;
+  height: 1rem;
+}
 nav ul li {
-  cursor: pointer;
   max-height: 40px;
+  position: relative;
+}
+nav ul li * {
+  cursor: pointer;
 }
 nav ul li .container-svg {
   max-height: 40px;
+  width: 100%;
 }
-nav ul #delete {
-  display: none !important;
+
+#delete {
+  height: 0;
+  width: 40px;
+  max-height: 40px;
+  transition: height 0.4s 0s linear;
 }
 
 .navActive {
   height: 40px !important;
-}
-.navActive #delete {
-  display: block !important;
 }
 
 .fs-1 {
