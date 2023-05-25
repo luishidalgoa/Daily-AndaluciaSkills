@@ -84,6 +84,7 @@ header {
    */
 }
 header #bars {
+  cursor: pointer;
   /**
   Cuando se clicke sobre el #bars se activara esta animación
    */
@@ -113,12 +114,16 @@ header #bars .bars_active:nth-child(3) {
 #TaskContainer :hover {
   background-color: rgb(240, 240, 240) !important;
 }
+#TaskContainer [tabindex="0"] {
+  background-color: rgb(240, 240, 240) !important;
+}
 #TaskContainer .task, #TaskContainer .task * {
   transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 #TaskContainer .task {
   border-radius: 0.8rem;
   box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 #TaskContainer .task #calendar {
   max-width: 30px;
@@ -250,6 +255,33 @@ footer form input[type=text] {
 footer form svg[viewBox="0 0 36 36"] {
   margin-left: auto !important;
   transform: translateX(-5px);
+}
+
+nav {
+  height: 0;
+  max-height: 40px;
+  transition: height 0.4s 0s linear;
+}
+nav ul {
+  padding: 0;
+  margin-bottom: 0;
+}
+nav ul li {
+  cursor: pointer;
+  max-height: 40px;
+}
+nav ul li .container-svg {
+  max-height: 40px;
+}
+nav ul #delete {
+  display: none !important;
+}
+
+.navActive {
+  height: 40px !important;
+}
+.navActive #delete {
+  display: block !important;
 }
 
 .fs-1 {
