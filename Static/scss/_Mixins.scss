@@ -1,3 +1,6 @@
 @mixin bars($angle,$translate...){
   transform: rotate($angle) translate($translate...);
 }
+@mixin max-height($px){
+  max-height: $px;
+}

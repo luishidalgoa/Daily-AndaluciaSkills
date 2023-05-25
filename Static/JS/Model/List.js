@@ -59,9 +59,6 @@ class List {
             for (const task of aux) {
                 const newTask = new Task(task.id, task.Title, "", "")
                 this.tasks.push(newTask)
-                setTimeout(() => {
-                    newTask.initializeEvents()
-                }, 1)
             }
             this.updateTasksContainer()
         }
@@ -77,6 +74,9 @@ class List {
         document.querySelector('#TaskContainer').innerHTML = "<div></div>"
         for (const task of this.tasks) {
             document.querySelector('#TaskContainer').innerHTML += task.getHtml()
+            setTimeout(() => {
+                task.initializeEvents()
+            }, 1)
         }
         updateDraggables()
 
@@ -102,7 +102,6 @@ class List {
     newID(){
         let autoIncrement = 0;
         while (this.tasks.some(task => task.id == autoIncrement)) { //prefiero usar == en lugar === para que me lo compare en cualquier tipo de dato evitando asi errores
-            console.log(autoIncrement)
             autoIncrement++;
         }
         return autoIncrement;
@@ -120,15 +119,35 @@ class List {
      * de una página web
      */
     initializeEvents() {
-        //Buscamos todos los elementos interactivos de la pagina
+        //ANIMACION LOTTIE
+        const animDelete= bodymovin.loadAnimation({
+            wrapper: document.querySelector('#delete .container-svg'),
+            animType: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'https://lottie.host/258a6c86-fba6-4b0b-9ebc-64b9f1e72074/82fHo4oK3i.json'
+        });
+
+        //Buscamos todos los elementos interactivos de la página
         this.menu_bars = document.getElementById('bars');
 
         this.menu_bars.addEventListener('click', this.barsActive.bind(this));
+        
+        this.addTask()
+        this.delete(animDelete);
+    }
 
+    /**
+     * EVENTO:
+     * creará un evento con todos los procedimientos para crear una tarea en el dom
+     */
+    addTask(){
         const formAdd = document.querySelector('footer form') //Formulario crear tarea
 
-        formAdd.querySelector('button[type="submit"]').addEventListener('click',
-            () => this.newTask(formAdd.querySelector('input[type="text"]').value));
+        formAdd.querySelector('button[type="submit"]').addEventListener('click', () => {
+            this.newTask(formAdd.querySelector('input[type="text"]').value)
+            formAdd.querySelector('input[type="text"]').value=""
+        });
 
         formAdd.querySelector('input[type="text"]').addEventListener('focus', () => {
             formAdd.classList.add('form_active')
@@ -137,18 +156,29 @@ class List {
         formAdd.querySelector('input[type="text"]').addEventListener('focusout', () => {
             formAdd.classList.remove('form_active')
         })
-        this.delete();
     }
-    delete(){
+    /**
+     *  EVENTO: 
+     * Evento eliminará las tareas seleccionadas por el usuario. La filosofía de este methods es devolver en forma de array
+     * todas las tareas que no tengan activado el check. de modo que se eliminaran automáticamente todas aquellas que 
+     * tengan el check
+     */
+    delete(animItem){
         const btnDelete= document.querySelector('nav ul #delete')
             btnDelete.addEventListener('click',()=>{
-                this.tasks.forEach((value,initialIndex)=>{
-                    if(document.getElementById('Task_'+value.id).querySelector('input[type="checkbox"]:checked')){
-                        console.log(initialIndex)
-                        this.tasks.splice(initialIndex,1)
+                if(document.querySelectorAll('.task input[type="checkbox"]:checked').length>0){
+                    animItem.play()
+                    animItem.addEventListener('complete', function() {
+                        animItem.goToAndStop(0);
+                    });
+                }
+                
+                
+               this.tasks = this.tasks.filter(function (value){
+                    if(document.getElementById('Task_'+value.id).querySelector('input:checked')===null){
+                        return value;
                     }
-                    initialIndex++;
-                },0)
+                })
                 this.updateTasksContainer()
                 this.NodeList_toTask(document.querySelectorAll('.task'))
             })
@@ -156,8 +186,8 @@ class List {
 
     getHtml() {
         return `
-        <div id="contains" class="p-0 w-100 h-100 bg-clear">
-            <header class="p-2 bg-white d-flex justify-content-between align-items-center">
+        <div id="contains" class="p-0 w-100 h-100">
+            <header class="p-2 d-flex justify-content-between align-items-center" style="background-color:rgb(103, 199, 195,.7);backdrop-filter: blur(10px)">
                 <div id="bars" class="d-flex flex-column justify-content-center" style="width: 30px; height: 40px; margin-left: 10px">
                     <span class="d-block"
                         style="min-width: 100%;min-height: 3px;max-width: 100%;border-radius: 9px; background-color: black;"></span>
@@ -175,10 +205,19 @@ class List {
                         fill="black" />
                 </svg>
             </header>
+            <!--Modulo -->
+            <div>
+                
+            </div>
             <section class="d-flex flex-column p-4">
-                <nav>
-                    <ul class="">
-                        <li id="delete">Delete</li>
+                <nav class="">
+                    <ul class="d-flex flex-row-reverse ml-auto">
+                        <li id="delete" class="d-flex gap-1">
+                            <div class="container-svg"></div>
+                        </li>
+                        <li class="d-flex gap-1" id="search">
+                            <div></div>
+                        </li>
                     </ul>
                 </nav>
                 <div id="TaskContainer" class="d-flex flex-column gap-3 swim-lane">
@@ -211,12 +250,5 @@ class List {
             </footer>
         </div>
         `
-    }
-
-    /**
-     * Elemento pie de pagina que habilitara la opcion de eliminar la lista de tareas seleccionada
-     */
-    getDeleteTaskHtml() {
-
     }
 }

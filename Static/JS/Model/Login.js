@@ -34,7 +34,7 @@ class Login {
     }
 
     /**
-     * Contiene el nodo HTML de la pantalla de carga. Esta diseñado para ser insertado dentro de otro nodo con
+     * Contiene el nodo HTML de la pantalla de carga. Está diseñado para ser insertado dentro de otro nodo con
      * InnerHtml = {...}
      * @returns {string}
      */

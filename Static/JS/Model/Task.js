@@ -1,53 +1,61 @@
-class Task{
-    constructor(id,title,note,date) {
-        this.id=id;
-        this.Title=title;
-        this.Note=note;
-        this.Date= date;
+class Task {
+    constructor(id, title, note, date) {
+        this.id = id;
+        this.Title = title;
+        this.Note = note;
+        this.Date = date;
     }
-    
-    initializeEvents(){
-        this.editable()
+
+    initializeEvents() {
+        console.log('CHECK')
+        const taskDOM = document.querySelector('#Task_' + this.id)
+        this.editable(taskDOM)
+        this.checked(taskDOM)
+
+        taskDOM.addEventListener('focus', (event) => {
+            taskDOM.setAttribute('tabindex', '0')
+        })
+        taskDOM.addEventListener('focusout', (event) => {
+            taskDOM.setAttribute('tabindex', '-1')
+        })
     }
 
     /**
      * Creará el evento de actualizar el contentEditable del span. de modo que cuando se hace 2 clics sobre el elemento
-     * se habilitara la edicion. pero cuando pierda el focus esta se desactivara
+     * se habilitara la edition. pero cuando pierda el focus esta se desactivara
      */
-    editable(){
-        const taskDOM=document.querySelector('#Task_'+this.id)
-
-        taskDOM.querySelector('span').addEventListener('dblclick',()=>{ //permite edit el titulo
-            document.querySelector('#Task_'+this.id).querySelector('span').setAttribute('contenteditable','true');
+    editable(taskDOM) {
+        taskDOM.querySelector('span').addEventListener('dblclick', () => { //permite edit el titulo
+            document.querySelector('#Task_' + this.id).querySelector('span').setAttribute('contenteditable', 'true');
         })
 
-        taskDOM.querySelector('span').addEventListener('focusout',()=>{ //Desabilita el edit cuando pierde el foco
-            document.querySelector('#Task_'+this.id).querySelector('span').setAttribute('contenteditable','false');
+        taskDOM.querySelector('span').addEventListener('focusout', () => { //Deshabilita el edit cuando pierde el foco
+            document.querySelector('#Task_' + this.id).querySelector('span').setAttribute('contenteditable', 'false');
         })
-    }
-    delete(){
-
-    }
-    setId(Id){
-        this.id=Id;
-    }
-    setTitle(Title){
-        this.Title=Title;
-    }
-    setNote(note){
-        if(note instanceof String){
-            this.Note=note;
-        }
-    }
-    setDate(date){
-        this.Date=date;
     }
 
     /**
-     * Construiremos la publicacion en torno a los valores definidos en el constructor
+     * Evento:
+     * Cuando se haga check en el input checkbox del DOM de la task. Se activará el menu nav de opciones
+     */
+    checked() {
+        const nav = document.querySelector('section nav')
+        const TaskContainer = document.querySelector('#TaskContainer')
+        TaskContainer.querySelector('#Task_' + this.id).addEventListener('change', () => {
+            console.log(document.querySelector('#TaskContainer').querySelectorAll('.task input[type="checkbox"]:checked').length)
+            if (document.querySelector('#TaskContainer').querySelectorAll('.task input[type="checkbox"]:checked').length <= 0) {
+                nav.classList.remove('navActive')
+            } else {
+                nav.classList.add('navActive')
+            }
+        })
+    }
+
+    /**
+     * Construiremos la publication en torno a los valores definidos en el constructor
      * @returns {string}
      */
-    getHtml(){
+    getHtml() {
         return `
             <div id="Task_` + this.id + `" tabindex="-1" draggable="true" class="task d-flex bg-white flex-nowrap p-2 overflow-auto flex-wrap" style="align-items: center;">
                     <div class="checkbox-wrapper-12">

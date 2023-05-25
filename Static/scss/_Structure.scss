@@ -93,6 +93,7 @@ header {
   Menu lateral izquierdo
    */
   #bars {
+    cursor: pointer;
     span {
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       background-color: black;
@@ -123,12 +124,16 @@ header {
   :hover {
     background-color:rgba(240, 240, 240, 1)!important;
   }
+  [tabindex="0"] {
+    background-color:rgba(240, 240, 240, 1)!important;
+  }
   .task,.task *{
     transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .task {
     border-radius: 0.8rem;
     box-shadow: -3px 5px 10px rgba(0,0,0,0.1);
+    position: relative;
     #calendar{
       max-width: 30px;
       min-width: 30px;
@@ -144,8 +149,7 @@ header {
       outline: none;
       border: unset;
     }
-
-   //IMPORTADO DE UIVERSE.IO-------------------------------------------------------------------------------
+   //-----------IMPORTADO DE UIVERSE.IO-------------------------------------------------------------------------------
     .checkbox-wrapper-12 {
       position: relative;
       width: 24px!important;
@@ -233,6 +237,7 @@ header {
   //------------------------------------------------------
   }
 }
+
 html{
   height: 100vh;
 }
@@ -271,5 +276,32 @@ footer{
       margin-left: auto!important;
       transform: translateX(-5px);
     }
+  }
+}
+
+
+nav{
+  height: 0;
+  max-height: 40px;
+  transition: height .4s 0s linear;
+  ul{
+    padding: 0;
+    margin-bottom: 0;
+    li{
+      cursor: pointer;
+      max-height:40px;
+      .container-svg{
+        @include max-height(40px)
+      }
+    }
+    #delete{
+      display: none!important;
+    }
+  }
+}
+.navActive{
+  height: 40px!important;
+  #delete{
+    display: block!important;
   }
 }
