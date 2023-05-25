@@ -1,98 +1,7 @@
 class List {
-    constructor(name) {
+    constructor(name,tasks) {
         this.name = name;
-        this.tasks = [];
-    }
-
-    /**
-     * Filtrará entre todas las tareas de la lista. Seguin cumpla con el texto filtrado
-     * @param text
-     * @returns {*}
-     */
-    filter(text) {
-        return this.tasks.reduce((initial, value) => {
-            if (value.Title.toUpperCase().includes(text.toUpperCase())) {
-                initial.push(value)
-            }
-            return initial
-        }, []);
-    }
-
-    deleteTasks() {
-
-
-    }
-    
-    /**
-     * Cuando se cree una tarea. este methods lo marsheara al localStorage
-     */
-    save() {
-        localStorage.setItem(this.name, JSON.stringify(this.tasks))
-    }
-
-    /**
-     * Podría llamarse también "SaveALL()"
-     * Converter una lista de elementos tipo .task en objetos Task()
-     * usuario. estas guarden su nueva position designada
-     * @param aux NoteList con todos las tareas las cuales vamos a marshier a tipo Task
-     */
-    NodeList_toTask(aux) {
-        this.tasks = []
-        aux.forEach((value) => {
-            const id = value.id.replace(/^Task_/, '')
-            const text = value.textContent.replace(/\n+/g, '\n').trim()
-            const note = ""
-            const date = ""
-            this.tasks.push(new Task(id, text, note, date))
-        })
-        localStorage.setItem(this.name, JSON.stringify(this.tasks))
-    }
-
-    /**
-     * Se encargará de cargar lo necesario del localStorage.
-     * Cargará: Las tareas.
-     * Posteriormente, cargará a cada tarea le cargará todos los eventos propios de las tareas
-     */
-    loadLocalStorage() {
-        if (localStorage.getItem(this.name) !== null) {
-            const aux = JSON.parse(localStorage.getItem(this.name));
-            for (const task of aux) {
-                const newTask = new Task(task.id, task.Title, "", "")
-                this.tasks.push(newTask)
-            }
-            this.updateTasksContainer()
-        }
-    }
-
-    /**
-     * Cuando creemos una nueva tarea o carguemos todas las tareas del localStorage.
-     * Este methods será lanzado para insertar la tarea en el DOM.
-     * posteriormente, actualizará los objetos que son draggable dentro de TaskContainer para agregarle
-     * eventos
-     */
-    updateTasksContainer() {
-        document.querySelector('#TaskContainer').innerHTML = "<div></div>"
-        for (const task of this.tasks) {
-            document.querySelector('#TaskContainer').innerHTML += task.getHtml()
-            setTimeout(() => {
-                task.initializeEvents()
-            }, 1)
-        }
-        updateDraggables()
-
-    }
-
-    /**
-     * Es
-     * @param title
-     * @returns {Task}
-     */
-    newTask(title) {
-        const result = new Task(this.newID(), title, "", "");
-        this.tasks.push(result)
-        this.save()
-        this.updateTasksContainer()
-        return result;
+        this.tasks = tasks;
     }
 
     /**
@@ -105,83 +14,6 @@ class List {
             autoIncrement++;
         }
         return autoIncrement;
-    }
-
-    barsActive() {
-        this.menu_bars.children[0].classList.toggle('bars_active')
-        this.menu_bars.children[1].classList.toggle('d-none')
-        this.menu_bars.children[2].classList.toggle('bars_active')
-    }
-
-
-    /**
-     * Este methods creará todos los eventos necesarios en el esqueleto html una vez insertado en el cuerpo
-     * de una página web
-     */
-    initializeEvents() {
-        //ANIMACION LOTTIE
-        const animDelete= bodymovin.loadAnimation({
-            wrapper: document.querySelector('#delete .container-svg'),
-            animType: 'svg',
-            loop: false,
-            autoplay: false,
-            path: 'https://lottie.host/258a6c86-fba6-4b0b-9ebc-64b9f1e72074/82fHo4oK3i.json'
-        });
-
-        //Buscamos todos los elementos interactivos de la página
-        this.menu_bars = document.getElementById('bars');
-
-        this.menu_bars.addEventListener('click', this.barsActive.bind(this));
-        
-        this.addTask()
-        this.delete(animDelete);
-    }
-
-    /**
-     * EVENTO:
-     * creará un evento con todos los procedimientos para crear una tarea en el dom
-     */
-    addTask(){
-        const formAdd = document.querySelector('footer form') //Formulario crear tarea
-
-        formAdd.querySelector('button[type="submit"]').addEventListener('click', () => {
-            this.newTask(formAdd.querySelector('input[type="text"]').value)
-            formAdd.querySelector('input[type="text"]').value=""
-        });
-
-        formAdd.querySelector('input[type="text"]').addEventListener('focus', () => {
-            formAdd.classList.add('form_active')
-        })
-
-        formAdd.querySelector('input[type="text"]').addEventListener('focusout', () => {
-            formAdd.classList.remove('form_active')
-        })
-    }
-    /**
-     *  EVENTO: 
-     * Evento eliminará las tareas seleccionadas por el usuario. La filosofía de este methods es devolver en forma de array
-     * todas las tareas que no tengan activado el check. de modo que se eliminaran automáticamente todas aquellas que 
-     * tengan el check
-     */
-    delete(animItem){
-        const btnDelete= document.querySelector('nav ul #delete')
-            btnDelete.addEventListener('click',()=>{
-                if(document.querySelectorAll('.task input[type="checkbox"]:checked').length>0){
-                    animItem.play()
-                    animItem.addEventListener('complete', function() {
-                        animItem.goToAndStop(0);
-                    });
-                }
-                
-                
-               this.tasks = this.tasks.filter(function (value){
-                    if(document.getElementById('Task_'+value.id).querySelector('input:checked')===null){
-                        return value;
-                    }
-                })
-                this.updateTasksContainer()
-                this.NodeList_toTask(document.querySelectorAll('.task'))
-            })
     }
 
     getHtml() {
@@ -197,7 +29,7 @@ class List {
                         style="min-width: 100%;min-height: 3px;max-width: 100%; border-radius: 9px; background-color: black; margin-top: 6px;"></span>
                 </div>
                 <div class="rounded-circle overflow-hidden bg-secondary img-content h-100" id="like">
-                    <img src="../Static/images/User.png" class="img-fluid img-zoom h-100" alt="">
+                    <img src="../../../Static/images/User.png" class="img-fluid img-zoom h-100" alt="">
                 </div>
                 <svg style="height:2.2em;" id="delete" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -210,13 +42,16 @@ class List {
                 
             </div>
             <section class="d-flex flex-column p-4">
-                <nav class="">
-                    <ul class="d-flex flex-row-reverse ml-auto">
-                        <li id="delete" class="d-flex gap-1">
+                <nav class="d-flex navActive" style="position:relative;width: 100%">
+                    <ul class="d-flex flex-row-reverse col-12 justify-content-start" style="max-width: 100%">
+                        <li id="delete" class="d-flex">
                             <div class="container-svg"></div>
                         </li>
-                        <li class="d-flex gap-1" id="search">
-                            <div></div>
+                        <li class="d-flex justify-content-start" id="search" style="width: calc(20px + 50vw);">
+                            <div style="width: 200px;max-width: 100%;max-height: 100%;" class="shadow rounded-3">
+                                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                                <input placeholder="Search" type="search" class="input">
+                            </div>
                         </li>
                     </ul>
                 </nav>

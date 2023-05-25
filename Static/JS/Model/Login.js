@@ -41,8 +41,8 @@ class Login {
     getHtml() {
         return `
             <div id="load" class="row justify-content-center col-8 position-absolute">
-            <span class="fs-1"><center>Daily</center></span>
-                <img src="../Static/images/logo.png" class="" alt="">
+            <span class="fs-1" style="text-align: center">Daily</span>
+                <img src="../../../Static/images/logo.png" class="" alt="">
                 <div id="LoadingText">
                     <span class="fs-3">Loading<p>.</p><p>.</p><p>.</p></span>
                 </div>

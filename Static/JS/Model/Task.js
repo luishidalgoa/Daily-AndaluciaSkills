@@ -7,15 +7,14 @@ class Task {
     }
 
     initializeEvents() {
-        console.log('CHECK')
         const taskDOM = document.querySelector('#Task_' + this.id)
         this.editable(taskDOM)
         this.checked(taskDOM)
 
-        taskDOM.addEventListener('focus', (event) => {
+        taskDOM.addEventListener('focus', () => {
             taskDOM.setAttribute('tabindex', '0')
         })
-        taskDOM.addEventListener('focusout', (event) => {
+        taskDOM.addEventListener('focusout', () => {
             taskDOM.setAttribute('tabindex', '-1')
         })
     }
@@ -30,6 +29,7 @@ class Task {
         })
 
         taskDOM.querySelector('span').addEventListener('focusout', () => { //Deshabilita el edit cuando pierde el foco
+            TasksDAO.saveAll(taskDOM.parentElement.querySelectorAll('.task'),controllerList.list.name)
             document.querySelector('#Task_' + this.id).querySelector('span').setAttribute('contenteditable', 'false');
         })
     }
@@ -39,14 +39,14 @@ class Task {
      * Cuando se haga check en el input checkbox del DOM de la task. Se activará el menu nav de opciones
      */
     checked() {
-        const nav = document.querySelector('section nav')
+        const btnDelete = document.querySelector('section nav #delete')
         const TaskContainer = document.querySelector('#TaskContainer')
         TaskContainer.querySelector('#Task_' + this.id).addEventListener('change', () => {
             console.log(document.querySelector('#TaskContainer').querySelectorAll('.task input[type="checkbox"]:checked').length)
             if (document.querySelector('#TaskContainer').querySelectorAll('.task input[type="checkbox"]:checked').length <= 0) {
-                nav.classList.remove('navActive')
+                btnDelete.classList.remove('navActive')
             } else {
-                nav.classList.add('navActive')
+                btnDelete.classList.add('navActive')
             }
         })
     }
