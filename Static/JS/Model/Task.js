@@ -7,7 +7,6 @@ class Task {
     }
 
     initializeEvents() {
-        console.log('CHECK')
         const taskDOM = document.querySelector('#Task_' + this.id)
         this.editable(taskDOM)
         this.checked(taskDOM)
@@ -30,6 +29,7 @@ class Task {
         })
 
         taskDOM.querySelector('span').addEventListener('focusout', () => { //Deshabilita el edit cuando pierde el foco
+            TasksDAO.saveAll(taskDOM.parentElement.querySelectorAll('.task'),controllerList.list.name)
             document.querySelector('#Task_' + this.id).querySelector('span').setAttribute('contenteditable', 'false');
         })
     }

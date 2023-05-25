@@ -19,13 +19,15 @@
         crossorigin="anonymous"></script>
 <script src="../Static/JS/External/lottie.js" type="text/javascript"></script>
 <script src="../Static/JS/External/Drag.js"></script>
-<script src="../Static/JS/Controller/ControllerList.js"></script>
+<script src="../Static/JS/Model/DAO/ListDAO.js"></script>
+<script src="../Static/JS/Model/DAO/TasksDAO.js"></script>
+<script  src="../Static/JS/Controller/ControllerList.js"></script>
 <script src="../Static/JS/Model/Task.js"></script>
 <script src="../Static/JS/Model/List.js"></script>
 <script src="../Static/JS/Model/Login.js"></script>
 <script type="text/javascript">
     let login = new Login(document.body)
-    let constrollerList=new ControllerList("Home");
-    login.show(constrollerList)
+    let controllerList=new ControllerList('Home');
+    login.show(controllerList)
 </script>
 </html>
