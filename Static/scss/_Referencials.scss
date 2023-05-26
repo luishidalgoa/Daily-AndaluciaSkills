@@ -1,0 +1,26 @@
+$rounded: .2rem,.4rem,.8rem,1.2rem,1.5rem,1.9rem;
+$rem: 0.5rem,1rem,1.5rem,2rem,2.5rem,3rem,3.5rem,4rem,4.5rem,5rem;
+@for $i from 1 through length($rem){
+  $size: nth($rem, $n: $i);
+  .fs-#{$i}{
+    font-size: $size!important;
+  }
+  .rw-#{$i}{
+    width: $size!important;
+  }
+  .gap-#{$i}{
+    gap: $size!important;
+  }
+}
+@for $i from 1 through length($rounded) {
+  .rounded-#{$i}{
+    $size: nth($rounded, $i);
+    border-radius: $size!important;
+  }
+}
+.o-0{
+  opacity: 0%!important;
+}
+.o-100{
+  opacity: 100%!important;
+}
