@@ -4,7 +4,9 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+li{
+  list-style: none;
+}
 //LOGIN
 #load { //SISTEMA DE CARGA
   width: 20em;
@@ -42,7 +44,6 @@ body {
       letter-spacing: 0px;
       padding: 0;
       font-style: italic;
-
       p {
         font-weight: 800;
         animation: pointsShake 1.5s infinite;
