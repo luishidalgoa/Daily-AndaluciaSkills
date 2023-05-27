@@ -9,7 +9,7 @@ class ControllerList{
      * asi como inicializar los eventos pertinentes de la lista de tareas
      */
     loadList(body){
-        body.innerHTML += this.list.getHtml();
+        body.innerHTML = this.list.getHtml();
         body.querySelector('#contains');
         this.initializeEvents();
         this.updateTasksContainer()
@@ -25,11 +25,9 @@ class ControllerList{
         document.querySelector('#TaskContainer').innerHTML = "<div></div>"
         for (const task of this.list.tasks) {
             document.querySelector('#TaskContainer').innerHTML += task.getHtml()
-            setTimeout(() => {
-                task.initializeEvents()
-            }, 1)
+            task.initializeEvents()
         }
-        TasksDAO.saveAll(document.querySelectorAll('.task'),this.list.name)
+        TasksDAO.saveAll(document.querySelectorAll('.task'),this.list)
         updateDraggables()
     }
 
@@ -41,12 +39,6 @@ class ControllerList{
      */
     newTask(title) {
         return new Task(this.list.newID(), title, "", "");
-    }
-
-    barsActive() {
-        this.menu_bars.children[0].classList.toggle('bars_active')
-        this.menu_bars.children[1].classList.toggle('d-none')
-        this.menu_bars.children[2].classList.toggle('bars_active')
     }
 
 
@@ -64,15 +56,12 @@ class ControllerList{
             autoplay: false,
             path: 'https://lottie.host/258a6c86-fba6-4b0b-9ebc-64b9f1e72074/82fHo4oK3i.json'
         });
-
         //Buscamos todos los elementos interactivos de la página
-        this.menu_bars = document.getElementById('bars');
-
-        this.menu_bars.addEventListener('click', this.barsActive.bind(this));
-
         this.addTask()
         this.deleteTasks(animDelete);
         this.searchTasks()
+        this.menuList()
+        this.addList()
     }
 
     /**
@@ -83,9 +72,12 @@ class ControllerList{
         const formAdd = document.querySelector('footer form') //Formulario crear tarea
 
         formAdd.querySelector('button[type="submit"]').addEventListener('click', () => {
-            this.list.tasks.push(this.newTask(formAdd.querySelector('input[type="text"]').value))
-            this.updateTasksContainer()
-            formAdd.querySelector('input[type="text"]').value=""
+            const value = formAdd.querySelector('input[type="text"]').value 
+            if(value.length>0){
+                this.list.tasks.push(this.newTask(value))
+                this.updateTasksContainer()
+                formAdd.querySelector('input[type="text"]').value=""
+            }
         });
 
         formAdd.querySelector('input[type="text"]').addEventListener('focus', () => {
@@ -121,13 +113,55 @@ class ControllerList{
                 }
             })
             this.updateTasksContainer()
-            TasksDAO.saveAll(document.querySelectorAll('.task'),this.list.name)
+            TasksDAO.saveAll(document.querySelectorAll('.task'),this.list)
         })
     }
 
     /**
+     * Evento:
+     * creará un evento en el que cuando se clicke sobre elemento del Header 'bars'
+     * de modo que se mostrara el formulario del método getMenuHTML() del objeto List()
+     */
+    menuList(){
+        const menu_bars = document.getElementById('bars')
+        menu_bars.addEventListener('click',()=>{
+            menu_bars.children[0].classList.toggle('bars_active')
+            menu_bars.children[1].classList.toggle('d-none')
+            menu_bars.children[2].classList.toggle('bars_active');
+            //evento formulario desplegable
+            {
+                const menuList = document.getElementById('menuList')
+                const ul= document.querySelector('#menuList ul')
+                const lists = ul.querySelectorAll('li')
+
+                ListDAO.searchAll().filter(function(value){ //value = List
+                    let boolean=false; //¿existe?
+                    const id= value.name.trim().replace(/\s/g, "")
+                    for (let i = 0; i < lists.length && !boolean; i++) {
+                        if(id === lists[i].id){
+                            boolean = true;
+                        }
+                    }
+                    if(!boolean){
+                        ul.innerHTML += value.getMenuHtml(value)
+                    }
+                })
+                menuList.classList.toggle('active')
+            }
+        });
+    }
+    addList(){
+        const form= document.querySelector('#menuList')
+        form.querySelector('#addList button').addEventListener('click',()=>{
+            if(form.querySelector('#addList input[type="text"]').value.length>0 && localStorage.getItem(form.querySelector('#addList input[type="text"]').value)===null){
+                controllerList= new ControllerList(form.querySelector('#addList input[type="text"]').value)
+                controllerList.loadList(document.querySelector('body'))
+            }
+        })
+    }
+    /**
      * EVENTO:
-     * Buscará entre todas las tareas de la lista seleccionada. Devolviendo un array con exclusivamente los elementos 
+     * Buscará entre todas las tareas de la lista seleccionada. Devolviendo un array con exclusivamente los elementos
      * filtrados. Este método hará consultas de filtrado al TaskDAO
      */
     searchTasks(){

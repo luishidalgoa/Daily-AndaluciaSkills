@@ -323,6 +323,42 @@ nav ul li .container-svg {
   height: 40px !important;
 }
 
+#contains #menuList {
+  height: 100vh;
+  width: fit-content;
+  max-width: 70vw;
+  position: fixed;
+  left: -200px;
+  z-index: 1;
+  background-color: rgba(103, 199, 195, 0.7);
+  backdrop-filter: blur(10px);
+  transition: left 0.4s 0s linear;
+  overflow: auto;
+}
+#contains .active {
+  left: 0 !important;
+}
+#contains #addList {
+  max-height: 50px;
+}
+#contains #addList div {
+  width: 100%;
+  height: 100%;
+}
+#contains #addList div button {
+  background-color: unset;
+  border: 0;
+  padding: 4px;
+}
+#contains #addList div input[type=text] {
+  width: 100% !important;
+  border: 0 !important;
+  border-radius: 5px;
+  outline: none;
+  overflow: auto;
+  padding-right: 5px;
+}
+
 .fs-1 {
   font-size: 0.5rem !important;
 }

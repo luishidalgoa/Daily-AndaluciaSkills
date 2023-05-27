@@ -22,12 +22,15 @@
 <script src="../Static/JS/Model/DAO/ListDAO.js"></script>
 <script src="../Static/JS/Model/DAO/TasksDAO.js"></script>
 <script  src="../Static/JS/Controller/ControllerList.js"></script>
-<script src="../Static/JS/Model/Task.js"></script>
-<script src="../Static/JS/Model/List.js"></script>
-<script src="../Static/JS/Model/Login.js"></script>
+<script src="../Static/JS/Model/Domain/Task.js"></script>
+<script src="../Static/JS/Model/Domain/List.js"></script>
+<script src="../Static/JS/Model/Domain/Login.js"></script>
 <script type="text/javascript">
     let login = new Login(document.body)
-    let controllerList=new ControllerList('Home');
+    let controllerList=new ControllerList('My Tasks');
+    if(localStorage.getItem('My Day')===null){
+        new ControllerList('My Day')
+    }
     login.show(controllerList)
 </script>
 </html>

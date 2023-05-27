@@ -22,9 +22,9 @@ class TasksDAO{
      */
     static searchAll(listName) {
         let result=[]
-        if (localStorage.getItem(listName) !== null) {
+        if (JSON.parse(localStorage.getItem(listName)).tasks) {
             const aux = JSON.parse(localStorage.getItem(listName));
-            for (const task of aux) {
+            for (const task of aux.tasks) {
                 const newTask = new Task(task.id, task.Title, "", "")
                 result.push(newTask)
             }
@@ -33,13 +33,12 @@ class TasksDAO{
     }
 
     /**
-     * Podría llamarse también "SaveALL()"
-     * Convierte una lista de elementos tipo .task en objetos Task()
-     * usuario. estas guarden su nueva position designada
-     * @param node NoteList con todos las tareas las cuales vamos a marshier a tipo Task
-     * @param listName nombre de la lista en la que lo serializaremos
+     * Serializa una lista completa en el localStorage. Incluyendo sus tareas y demás campos. La impedancia de datos
+     * es de tipo Eager. Ya que serializamos un tipo List y dentro de él una colección de tipo Task
+     * @param node nodo de elementos 
+     * @param list lista que vamos a serializar
      */
-    static saveAll(node,listName) {
+    static saveAll(node,list) {
         let result = []
         node.forEach((value) => {
             const id = value.id.replace(/^Task_/, '')
@@ -48,6 +47,8 @@ class TasksDAO{
             const date = ""
             result.push(new Task(id, text, note, date))
         })
-        localStorage.setItem(listName, JSON.stringify(result))
+        list.tasks=result
+        result=list;
+        localStorage.setItem(list.name, JSON.stringify(result))
     }
 }
