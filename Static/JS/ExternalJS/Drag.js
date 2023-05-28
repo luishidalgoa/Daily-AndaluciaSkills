@@ -9,7 +9,7 @@ function updateDraggables(){
         });
         task.addEventListener("dragend", () => {
             task.classList.remove("is-dragging");
-            TasksDAO.saveAll(document.querySelectorAll('.task'),controllerList.list.name);
+            TasksDAO.saveAll(document.querySelectorAll('.task'),controllerList.list);
         });
     });
 

@@ -82,7 +82,8 @@ li {
 
 header {
   height: 70px;
-  background-color: #67c7c3;
+  background-color: rgba(103, 199, 195, 0.7);
+  backdrop-filter: blur(10px);
   /**
   Menu lateral izquierdo
    */
@@ -104,61 +105,64 @@ header #bars .bars_active:nth-child(3) {
   transform: rotate(-45deg) translate(-2px, -3px);
 }
 
-#TaskContainer {
-  margin-bottom: 45px;
+section {
+  max-width: 100%;
+  width: 100%;
+  overflow: auto;
+  max-height: calc(100vh - 130px);
 }
-#TaskContainer .is-dragging {
+section #TaskContainer .is-dragging {
   scale: 0.95;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
   background-color: rgba(234, 234, 234, 0.6) !important;
 }
-#TaskContainer :hover > .checkbox-wrapper-12 input {
+section #TaskContainer :hover > .checkbox-wrapper-12 input {
   display: block !important;
 }
-#TaskContainer :hover {
+section #TaskContainer :hover {
   background-color: rgb(240, 240, 240) !important;
 }
-#TaskContainer [tabindex="0"] {
+section #TaskContainer [tabindex="0"] {
   background-color: rgb(240, 240, 240) !important;
 }
-#TaskContainer .task, #TaskContainer .task * {
+section #TaskContainer .task, section #TaskContainer .task * {
   transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-#TaskContainer .task {
+section #TaskContainer .task {
   border-radius: 0.8rem;
   box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
   position: relative;
 }
-#TaskContainer .task #calendar {
+section #TaskContainer .task #calendar {
   max-width: 30px;
   min-width: 30px;
 }
-#TaskContainer .task span {
+section #TaskContainer .task span {
   position: relative;
   width: 100%;
   white-space: nowrap;
   overflow: auto;
   text-rendering: optimizeLegibility;
 }
-#TaskContainer .task span:focus-visible {
+section #TaskContainer .task span:focus-visible {
   outline: none;
   border: unset;
 }
-#TaskContainer .task .checkbox-wrapper-12 {
+section #TaskContainer .task .checkbox-wrapper-12 {
   position: relative;
   width: 24px !important;
 }
-#TaskContainer .task .checkbox-wrapper-12 > svg {
+section #TaskContainer .task .checkbox-wrapper-12 > svg {
   position: absolute;
   top: -130%;
   left: -170%;
   width: 110px;
   pointer-events: none;
 }
-#TaskContainer .task .checkbox-wrapper-12 * {
+section #TaskContainer .task .checkbox-wrapper-12 * {
   box-sizing: border-box;
 }
-#TaskContainer .task .checkbox-wrapper-12 input[type=checkbox] {
+section #TaskContainer .task .checkbox-wrapper-12 input[type=checkbox] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -166,16 +170,16 @@ header #bars .bars_active:nth-child(3) {
   cursor: pointer;
   margin: 0;
 }
-#TaskContainer .task .checkbox-wrapper-12 input[type=checkbox]:focus {
+section #TaskContainer .task .checkbox-wrapper-12 input[type=checkbox]:focus {
   outline: 0;
 }
-#TaskContainer .task .checkbox-wrapper-12 .cbx {
+section #TaskContainer .task .checkbox-wrapper-12 .cbx {
   width: 24px;
   height: 24px;
   top: 88px;
   left: 88px;
 }
-#TaskContainer .task .checkbox-wrapper-12 .cbx input {
+section #TaskContainer .task .checkbox-wrapper-12 .cbx input {
   position: absolute;
   top: 0;
   left: 0;
@@ -184,7 +188,7 @@ header #bars .bars_active:nth-child(3) {
   border: 2px solid #bfbfc0;
   border-radius: 50%;
 }
-#TaskContainer .task .checkbox-wrapper-12 .cbx label {
+section #TaskContainer .task .checkbox-wrapper-12 .cbx label {
   width: 24px;
   height: 24px;
   background: none;
@@ -195,14 +199,14 @@ header #bars .bars_active:nth-child(3) {
   transform: translate3d(0, 0, 0);
   pointer-events: none;
 }
-#TaskContainer .task .checkbox-wrapper-12 .cbx svg {
+section #TaskContainer .task .checkbox-wrapper-12 .cbx svg {
   position: absolute;
   top: 5px;
   left: 4px;
   z-index: 1;
   pointer-events: none;
 }
-#TaskContainer .task .checkbox-wrapper-12 .cbx svg path {
+section #TaskContainer .task .checkbox-wrapper-12 .cbx svg path {
   stroke: #fff;
   stroke-width: 3;
   stroke-linecap: round;
@@ -212,10 +216,10 @@ header #bars .bars_active:nth-child(3) {
   transition: stroke-dashoffset 0.3s ease;
   transition-delay: 0.2s;
 }
-#TaskContainer .task .checkbox-wrapper-12 .cbx input:checked + label {
+section #TaskContainer .task .checkbox-wrapper-12 .cbx input:checked + label {
   animation: splash-12 0.6s ease forwards;
 }
-#TaskContainer .task .checkbox-wrapper-12 .cbx input:checked + label + svg path {
+section #TaskContainer .task .checkbox-wrapper-12 .cbx input:checked + label + svg path {
   stroke-dashoffset: 0;
 }
 
@@ -231,7 +235,6 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
   bottom: 0;
   width: 100%;
   height: 60px;
@@ -321,6 +324,53 @@ nav ul li .container-svg {
 
 .navActive {
   height: 40px !important;
+}
+
+#contains #menuList {
+  max-height: calc(100vh - 70px);
+  width: 0;
+  position: relative;
+  max-width: 200px;
+  left: -200px;
+  z-index: 1;
+  background-color: rgba(103, 199, 195, 0.7);
+  backdrop-filter: blur(10px);
+  transition: left 0.4s 0s linear;
+  overflow: auto;
+}
+#contains #menuList li {
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  max-width: 200px;
+}
+#contains #menuList li span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#contains div .active {
+  left: 0 !important;
+  width: fit-content !important;
+}
+#contains #addList {
+  max-height: 50px;
+}
+#contains #addList div {
+  width: 100%;
+  height: 100%;
+}
+#contains #addList div button {
+  background-color: unset;
+  border: 0;
+  padding: 4px;
+}
+#contains #addList div input[type=text] {
+  width: 100% !important;
+  border: 0 !important;
+  border-radius: 5px;
+  outline: none;
+  overflow: auto;
+  padding-right: 5px;
 }
 
 .fs-1 {
@@ -603,6 +653,20 @@ nav ul li .container-svg {
 
 .bg-white {
   background-color: white;
+}
+
+@media (min-width: 768px) {
+  header #bars {
+    display: none !important;
+  }
+  header #sticky {
+    display: none;
+  }
+  #menuList {
+    transition: none !important;
+    left: 0 !important;
+    min-width: 200px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

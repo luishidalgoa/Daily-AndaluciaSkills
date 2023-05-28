@@ -4,9 +4,11 @@ body {
   justify-content: center;
   align-items: center;
 }
-li{
+
+li {
   list-style: none;
 }
+
 //LOGIN
 #load { //SISTEMA DE CARGA
   width: 20em;
@@ -44,6 +46,7 @@ li{
       letter-spacing: 0px;
       padding: 0;
       font-style: italic;
+
       p {
         font-weight: 800;
         animation: pointsShake 1.5s infinite;
@@ -90,7 +93,8 @@ li{
 //Menu Bars
 header {
   height: 70px;
-  background-color: #67c7c3;
+  background-color: rgb(103, 199, 195, .7);
+  backdrop-filter: blur(10px);
   /**
   Menu lateral izquierdo
    */
@@ -115,142 +119,146 @@ header {
   }
 }
 
-#TaskContainer {
-  margin-bottom: 45px;
-
-  .is-dragging {
-    scale: 0.95;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
-    background-color: rgba(234, 234, 234, 0.6) !important;
-  }
-
-  :hover > .checkbox-wrapper-12 input {
-    display: block !important;
-  }
-
-  :hover {
-    background-color: rgba(240, 240, 240, 1) !important;
-  }
-
-  [tabindex="0"] {
-    background-color: rgba(240, 240, 240, 1) !important;
-  }
-
-  .task, .task * {
-    transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-  }
-
-  .task {
-    border-radius: 0.8rem;
-    box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-
-    #calendar {
-      max-width: 30px;
-      min-width: 30px;
+section {
+  max-width: 100%;
+  width: 100%;
+  overflow: auto;
+  max-height: calc(100vh - 130px);
+  #TaskContainer {
+    .is-dragging {
+      scale: 0.95;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+      background-color: rgba(234, 234, 234, 0.6) !important;
     }
 
-    span {
+    :hover > .checkbox-wrapper-12 input {
+      display: block !important;
+    }
+
+    :hover {
+      background-color: rgba(240, 240, 240, 1) !important;
+    }
+
+    [tabindex="0"] {
+      background-color: rgba(240, 240, 240, 1) !important;
+    }
+
+    .task, .task * {
+      transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    .task {
+      border-radius: 0.8rem;
+      box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
       position: relative;
-      width: 100%;
-      white-space: nowrap;
-      overflow: auto;
-      text-rendering: optimizeLegibility;
-    }
 
-    span:focus-visible {
-      outline: none;
-      border: unset;
-    }
+      #calendar {
+        max-width: 30px;
+        min-width: 30px;
+      }
 
-    //-----------IMPORTADO DE UIVERSE.IO-------------------------------------------------------------------------------
-    .checkbox-wrapper-12 {
-      position: relative;
-      width: 24px !important;
-    }
+      span {
+        position: relative;
+        width: 100%;
+        white-space: nowrap;
+        overflow: auto;
+        text-rendering: optimizeLegibility;
+      }
 
-    .checkbox-wrapper-12 > svg {
-      position: absolute;
-      top: -130%;
-      left: -170%;
-      width: 110px;
-      pointer-events: none;
-    }
+      span:focus-visible {
+        outline: none;
+        border: unset;
+      }
 
-    .checkbox-wrapper-12 * {
-      box-sizing: border-box;
-    }
+      //-----------IMPORTADO DE UIVERSE.IO-------------------------------------------------------------------------------
+      .checkbox-wrapper-12 {
+        position: relative;
+        width: 24px !important;
+      }
 
-    .checkbox-wrapper-12 input[type="checkbox"] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      -webkit-tap-highlight-color: transparent;
-      cursor: pointer;
-      margin: 0;
-    }
+      .checkbox-wrapper-12 > svg {
+        position: absolute;
+        top: -130%;
+        left: -170%;
+        width: 110px;
+        pointer-events: none;
+      }
 
-    .checkbox-wrapper-12 input[type="checkbox"]:focus {
-      outline: 0;
-    }
+      .checkbox-wrapper-12 * {
+        box-sizing: border-box;
+      }
 
-    .checkbox-wrapper-12 .cbx {
-      width: 24px;
-      height: 24px;
-      top: calc(100px - 12px);
-      left: calc(100px - 12px);
-    }
+      .checkbox-wrapper-12 input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        cursor: pointer;
+        margin: 0;
+      }
 
-    .checkbox-wrapper-12 .cbx input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 24px;
-      height: 24px;
-      border: 2px solid #bfbfc0;
-      border-radius: 50%;
-    }
+      .checkbox-wrapper-12 input[type="checkbox"]:focus {
+        outline: 0;
+      }
 
-    .checkbox-wrapper-12 .cbx label {
-      width: 24px;
-      height: 24px;
-      background: none;
-      border-radius: 50%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: translate3d(0, 0, 0);
-      pointer-events: none;
-    }
+      .checkbox-wrapper-12 .cbx {
+        width: 24px;
+        height: 24px;
+        top: calc(100px - 12px);
+        left: calc(100px - 12px);
+      }
 
-    .checkbox-wrapper-12 .cbx svg {
-      position: absolute;
-      top: 5px;
-      left: 4px;
-      z-index: 1;
-      pointer-events: none;
-    }
+      .checkbox-wrapper-12 .cbx input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 24px;
+        height: 24px;
+        border: 2px solid #bfbfc0;
+        border-radius: 50%;
+      }
 
-    .checkbox-wrapper-12 .cbx svg path {
-      stroke: #fff;
-      stroke-width: 3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 19;
-      stroke-dashoffset: 19;
-      transition: stroke-dashoffset 0.3s ease;
-      transition-delay: 0.2s;
-    }
+      .checkbox-wrapper-12 .cbx label {
+        width: 24px;
+        height: 24px;
+        background: none;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate3d(0, 0, 0);
+        pointer-events: none;
+      }
 
-    .checkbox-wrapper-12 .cbx input:checked + label {
-      animation: splash-12 0.6s ease forwards;
-    }
+      .checkbox-wrapper-12 .cbx svg {
+        position: absolute;
+        top: 5px;
+        left: 4px;
+        z-index: 1;
+        pointer-events: none;
+      }
 
-    .checkbox-wrapper-12 .cbx input:checked + label + svg path {
-      stroke-dashoffset: 0;
-    }
+      .checkbox-wrapper-12 .cbx svg path {
+        stroke: #fff;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 19;
+        stroke-dashoffset: 19;
+        transition: stroke-dashoffset 0.3s ease;
+        transition-delay: 0.2s;
+      }
 
-    //------------------------------------------------------
+      .checkbox-wrapper-12 .cbx input:checked + label {
+        animation: splash-12 0.6s ease forwards;
+      }
+
+      .checkbox-wrapper-12 .cbx input:checked + label + svg path {
+        stroke-dashoffset: 0;
+      }
+
+      //------------------------------------------------------
+    }
   }
 }
 
@@ -266,7 +274,6 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
   bottom: 0;
   width: 100%;
   height: 60px;
@@ -354,6 +361,7 @@ nav {
       }
 
       position: relative;
+
       .container-svg {
         @include max-height(40px);
         width: 100%;
@@ -369,7 +377,70 @@ nav {
   max-height: 40px;
   transition: height .4s 0s linear;
 }
+
 .navActive {
   height: 40px !important;
 }
 
+//Componente menuList
+#contains {
+  #menuList {
+    max-height: calc(100vh - 70px);
+    width: 0;
+    position: relative;
+    max-width: 200px;
+    left: -200px;
+    z-index: 1;
+    background-color: rgb(103, 199, 195, .7);
+    backdrop-filter: blur(10px);
+    transition: left .4s 0s linear;
+    overflow: auto;
+
+    li {
+      border-radius: 5px;
+      position: relative;
+      cursor: pointer;
+      max-width: 200px;
+
+      span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  div .active {
+    left: 0 !important;
+    width: fit-content!important;
+  }
+
+  #addList {
+    max-height: 50px;
+
+    div {
+      width: 100%;
+      height: 100%;
+
+      button {
+        background-color: unset;
+        border: 0;
+        padding: 4px;
+      }
+
+      input[type="text"] {
+        width: 100% !important;
+        border: 0 !important;
+        border-radius: 5px;
+        outline: none;
+        overflow: auto;
+        padding-right: 5px;
+      }
+    }
+  }
+}
+
+#contextMenu {
+  li {
+
+  }
+}

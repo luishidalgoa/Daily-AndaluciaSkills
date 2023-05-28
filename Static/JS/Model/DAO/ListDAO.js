@@ -1,17 +1,25 @@
 class ListDAO{
     /**
      * Esta function devolve un array de tipo 'List()'.
+     * @description NOTA: de cara al futuro tender que tener cuidado y revisar que lo que extraigo son array de listas y no de cualquier
+     *       objeto
+     * @returns [] devuelve un array de Listas
      */
     static searchAll(){
-        
+        let result = []
+        for (const aux of Object.keys(localStorage)) {
+            const data = this.searchList(aux)
+            result.push(data)
+        }
+        return result
     }
 
     /**
-     * Guardara o creara una nueva lista begun exista o no. Sí existe. automáticamente, serializará todos sus objetos
+     * creará una nueva lista begun exista o no. Sí existe. automáticamente, serializará todos sus objetos
      * @param listName nombre de la lista nueva o existente donde se guardaran los objetos o se creara
      */
     static save(listName){
-        localStorage.setItem(listName, JSON.stringify(TasksDAO.searchAll(listName)))
+        localStorage.setItem(listName, JSON.stringify(new List(listName,[])))
     }
 
     /**
@@ -22,10 +30,11 @@ class ListDAO{
      */
     static searchList(listName){
         let result = new List(listName,[]);
-        if(localStorage.getItem(listName)!==null){
+        const data = JSON.parse(localStorage.getItem(listName))
+        if(data!==null){
             result = new List(listName,TasksDAO.searchAll(listName))
+            result.svg=data.svg
         }else{
-            console.log(listName)
             this.save(listName)
         }
         return result;

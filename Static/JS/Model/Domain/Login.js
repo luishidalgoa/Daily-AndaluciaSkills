@@ -29,6 +29,9 @@ class Login {
                 this.load = null;
                 controllerList.loadList(this.body);
                 this.body.querySelector('#contains').classList.add('transition-start');//agregamos transicion de inicio
+                setTimeout(()=>{
+                    this.body.querySelector('#contains').classList.remove('transition-start');
+                },2000)
             }, 1000);
         }, );//3500
     }
@@ -42,7 +45,7 @@ class Login {
         return `
             <div id="load" class="row justify-content-center col-8 position-absolute">
             <span class="fs-1" style="text-align: center">Daily</span>
-                <img src="../../../Static/images/logo.png" class="" alt="">
+                <img src="../Static/images/logo.png" class="" alt="">
                 <div id="LoadingText">
                     <span class="fs-3">Loading<p>.</p><p>.</p><p>.</p></span>
                 </div>
