@@ -29,6 +29,9 @@ class Login {
                 this.load = null;
                 controllerList.loadList(this.body);
                 this.body.querySelector('#contains').classList.add('transition-start');//agregamos transicion de inicio
+                setTimeout(()=>{
+                    this.body.querySelector('#contains').classList.remove('transition-start');
+                },2000)
             }, 1000);
         }, );//3500
     }
