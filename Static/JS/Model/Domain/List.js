@@ -36,7 +36,7 @@ class List {
                 <div class="rounded-circle overflow-hidden bg-secondary img-content h-100" id="like">
                     <img src="../Static/images/User.png" class="img-fluid img-zoom h-100" alt="">
                 </div>
-                <svg style="height:2.2em;" id="delete" viewBox="0 0 36 36" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <svg style="height:2.2em;" id="sticky" viewBox="0 0 36 36" fill="white" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M31.5 20.25C30.6 20.25 30 20.85 30 21.75V25.5C30 28.05 27.9 30.15 25.35 30.15H10.65C8.1 30 6 27.9 6 25.35V10.65C6 8.1 8.1 6 10.65 6H16.65C16.95 6 17.4 6 17.7 6.15V10.65C17.7 14.85 21.15 18.3 25.35 18.3H31.5C32.1 18.3 32.7 18 32.85 17.4C33.15 16.8 33 16.2 32.55 15.75L22.05 5.25C20.55 3.75 18.75 3 16.65 3H10.65C6.45 3 3 6.45 3 10.65V25.35C3 29.55 6.45 33 10.65 33H25.35C29.55 33 33 29.55 33 25.35V21.6C33 20.85 32.4 20.25 31.5 20.25ZM20.7 8.1L27.9 15.3H25.35C22.8 15.3 20.7 13.2 20.7 10.65V8.1V8.1Z"
                         fill="white" />

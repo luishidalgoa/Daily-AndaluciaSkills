@@ -386,7 +386,7 @@ nav {
 #contains {
   #menuList {
     max-height: calc(100vh - 70px);
-    width: fit-content;
+    width: 0;
     position: relative;
     max-width: 200px;
     left: -200px;
@@ -409,8 +409,9 @@ nav {
     }
   }
 
-  .active {
+  div .active {
     left: 0 !important;
+    width: fit-content!important;
   }
 
   #addList {

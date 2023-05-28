@@ -25,7 +25,9 @@ class ControllerList {
         document.querySelector('#TaskContainer').innerHTML = "<div></div>"
         for (const task of this.list.tasks) {
             document.querySelector('#TaskContainer').innerHTML += task.getHtml()
-            task.initializeEvents()
+            setTimeout(() => {
+                task.initializeEvents()
+            }, 1)
         }
         TasksDAO.saveAll(document.querySelectorAll('.task'), this.list)
         updateDraggables()
@@ -60,8 +62,26 @@ class ControllerList {
         this.addTask()
         this.deleteTasks(animDelete);
         this.searchTasks()
-        this.menuList()
+        this.bars()
         this.addList()
+        this.resize()
+        window.addEventListener('resize', () => {
+            this.resize()
+        })
+    }
+
+    resize() {
+        const menu_bars = document.getElementById('bars')
+        if (window.innerWidth >= 768) {
+            menu_bars.children[0].classList.remove('bars_active')
+            menu_bars.children[1].classList.remove('d-none')
+            menu_bars.children[2].classList.remove('bars_active')
+            if (!document.getElementById('menuList').classList.contains('active')) {
+                this.menuList()
+            }
+        } else {
+            document.getElementById('menuList').classList.remove('active')
+        }
     }
 
     /**
@@ -125,44 +145,48 @@ class ControllerList {
      * para posteriormente construir elementos <li> de la lista que se mostrara. si esta no esta insertada
      * previamente en el ul del formulario
      */
-    menuList() {
+    bars() {
         const menu_bars = document.getElementById('bars')
         menu_bars.addEventListener('click', () => {
             menu_bars.children[0].classList.toggle('bars_active')
             menu_bars.children[1].classList.toggle('d-none')
             menu_bars.children[2].classList.toggle('bars_active');
-            
-            //evento formulario desplegable
-            {
-                const menuList = document.getElementById('menuList')
-                const ul = document.querySelector('#menuList ul')
-                const lists = ul.querySelectorAll('li')
+            this.menuList()
+        });
+    }
 
-                ListDAO.searchAll().filter(function (value) { //value = List
-                    let boolean = false; //¿existe?
-                    const id = value.name.trim().replace(/\s/g, "")
-                    for (let i = 0; i < lists.length && !boolean; i++) {
-                        if (id === lists[i].id) {
-                            boolean = true;
-                        }
-                    }
-                    if (!boolean) { //SI NO EXISTE EN EL DOM ENTONCES CARGAMOS LA LISTA EN EL MENU
-                        ul.innerHTML += value.getMenuHtml(value)
+    /**
+     * Este componente cargara todo lo necesario para que el menu de listas se ejecute correctamente
+     * Este menu mostrara todas las listas del usuario ademas de permitir un "Crud" de ellas
+     */
+    menuList() {
+        const menuList = document.getElementById('menuList')
+        const ul = document.querySelector('#menuList ul')
+        const lists = ul.querySelectorAll('li')
 
-                        setTimeout(() => {
-                            ul.querySelector('#' + id).addEventListener('click', () => {
-                                controllerList = new ControllerList(value.name)
-                                controllerList.loadList(document.querySelector('body'))
-                            })
-                        }, 1)
-                    }
-                })
-                menuList.classList.toggle('active')
-                if (!menuList.classList.contains('active')) {
-                    ul.innerHTML = ''
+        ListDAO.searchAll().filter(function (value) { //value = List
+            let boolean = false; //¿existe?
+            const id = value.name.trim().replace(/\s/g, "")
+            for (let i = 0; i < lists.length && !boolean; i++) {
+                if (id === lists[i].id) {
+                    boolean = true;
                 }
             }
-        });
+            if (!boolean) { //SI NO EXISTE EN EL DOM ENTONCES CARGAMOS LA LISTA EN EL MENU
+                ul.innerHTML += value.getMenuHtml(value)
+
+                setTimeout(() => {
+                    ul.querySelector('#' + id).addEventListener('click', () => {
+                        controllerList = new ControllerList(value.name)
+                        controllerList.loadList(document.querySelector('body'))
+                    })
+                }, 1)
+            }
+        })
+        menuList.classList.toggle('active')
+        if (!menuList.classList.contains('active')) {
+            ul.innerHTML = ''
+        }
     }
 
     /**
