@@ -23,7 +23,7 @@ class List {
      */
     getHtml() {
         return `
-        <div id="contains" style="position: relative;max-width: 100vw" class="p-0 w-100 h-100">
+        <div id="contains" style="position: relative;max-width: 100vw" class="p-0 w-100 h-100 primary">
             <header class="p-2 d-flex justify-content-between align-items-center">
                 <div id="bars" class="d-flex flex-column justify-content-center" style="width: 30px; height: 40px; margin-left: 10px">
                     <span class="d-block"
@@ -65,14 +65,14 @@ class List {
                         </div>
                     </div>
                 </form>
-                <div style="overflow: auto;max-height: calc(100vh - 70px);width: 100%;min-height: calc(100vh - 70px);">
+                <div id="centerPanel" class="bg-clear" style="overflow: auto;max-height: calc(100vh - 70px);width: 100%;min-height: calc(100vh - 70px);">
                     <section class="d-flex flex-column p-4 bg-clear">
-                        <nav class="d-flex navActive" style="position:relative;width: 100%">
+                         <nav class="d-flex navActive" style="position:relative;width: 100%">
                             <ul class="d-flex flex-row-reverse col-12 justify-content-start" style="max-width: 100%">
                                 <li id="delete" class="d-flex">
                                     <div class="container-svg"></div>
                                 </li>
-                                <li class="d-flex justify-content-start" id="search" style="width: calc(20px + 50vw);">
+                                <li class="d-flex justify-content-start" id="search"">
                                     <div style="max-width: 100%;max-height: 100%;" class="shadow rounded-3">
                                         <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
                                         <input placeholder="Search" type="search" class="input">
@@ -84,7 +84,7 @@ class List {
                         
                         </div>
                     </section>
-                    <footer class="bg-clear">
+                    <footer class="bg-clear" style="position: relative;bottom: 0">
                             <form action="javascript:void(0);" class="d-flex bg-white">
                                 <button type="submit" class="rounded-1">
                                     <svg style="height: 2em;" viewBox="0 0 24 24">
@@ -109,6 +109,9 @@ class List {
                             </form>
                     </footer>
                 </div>
+                <form id="menuList" action="javascript:void(0);">
+                
+                </form>
             </div>
         </div>
         `

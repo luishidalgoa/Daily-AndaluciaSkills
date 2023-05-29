@@ -1,15 +1,23 @@
+.active{
+  min-width: 150px;
+}
 @media (min-width: 768px) {
-    header{
-      #bars{
-        display: none!important;
-      }
-      #sticky{
-        display: none;
-      }
+  header {
+    #bars {
+      display: none !important;
     }
-    #menuList{
-      transition: none!important;
-      left: 0!important;
-      min-width: 200px;
+
+    #sticky {
+      display: none;
     }
+  }
+  #centerPanel {
+    border-radius: 15px 15px 0 0 !important;
+  }
+  #menuList {
+    transition: none !important;
+    left: 0 !important;
+    min-width: 200px;
+  }
+
 }

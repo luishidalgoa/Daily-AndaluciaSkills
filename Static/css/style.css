@@ -82,8 +82,6 @@ li {
 
 header {
   height: 70px;
-  background-color: rgba(103, 199, 195, 0.7);
-  backdrop-filter: blur(10px);
   /**
   Menu lateral izquierdo
    */
@@ -111,6 +109,9 @@ section {
   overflow: auto;
   max-height: calc(100vh - 130px);
 }
+section #TaskContainer {
+  align-items: center;
+}
 section #TaskContainer .is-dragging {
   scale: 0.95;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
@@ -137,7 +138,7 @@ section #TaskContainer .task #calendar {
   max-width: 30px;
   min-width: 30px;
 }
-section #TaskContainer .task span {
+section #TaskContainer .task div:first-child ~ span {
   position: relative;
   width: 100%;
   white-space: nowrap;
@@ -151,6 +152,7 @@ section #TaskContainer .task span:focus-visible {
 section #TaskContainer .task .checkbox-wrapper-12 {
   position: relative;
   width: 24px !important;
+  display: grid;
 }
 section #TaskContainer .task .checkbox-wrapper-12 > svg {
   position: absolute;
@@ -176,8 +178,8 @@ section #TaskContainer .task .checkbox-wrapper-12 input[type=checkbox]:focus {
 section #TaskContainer .task .checkbox-wrapper-12 .cbx {
   width: 24px;
   height: 24px;
-  top: 88px;
-  left: 88px;
+  top: 20%;
+  position: relative;
 }
 section #TaskContainer .task .checkbox-wrapper-12 .cbx input {
   position: absolute;
@@ -268,6 +270,10 @@ nav ul {
   padding: 0;
   margin-bottom: 0;
 }
+nav ul #search {
+  width: calc(50% + 100px);
+  position: relative;
+}
 nav ul #search div {
   display: flex;
   line-height: 28px;
@@ -333,16 +339,17 @@ nav ul li .container-svg {
   max-width: 200px;
   left: -200px;
   z-index: 1;
-  background-color: rgba(103, 199, 195, 0.7);
-  backdrop-filter: blur(10px);
   transition: left 0.4s 0s linear;
   overflow: auto;
 }
 #contains #menuList li {
+  justify-content: space-between;
+  align-items: center;
   border-radius: 5px;
   position: relative;
   cursor: pointer;
   max-width: 200px;
+  white-space: nowrap !important;
 }
 #contains #menuList li span:first-child {
   overflow: hidden;
@@ -371,6 +378,38 @@ nav ul li .container-svg {
   outline: none;
   overflow: auto;
   padding-right: 5px;
+}
+
+.task div {
+  padding: 0;
+}
+
+.TaskNote {
+  height: 0 !important;
+  overflow: hidden;
+  transition: height 0.6s 0s linear !important;
+}
+
+.task[tabindex="0"] .TaskNote {
+  position: relative;
+  overflow: auto;
+  height: fit-content !important;
+  min-height: 40px;
+  filter: opacity(0.5);
+}
+.task[tabindex="0"] .TaskNote div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  word-break: break-word;
+  gap: 10px;
+}
+.task[tabindex="0"] .TaskNote div p {
+  color: #999999;
+}
+.task[tabindex="0"] .TaskNote div span {
+  grid-auto-rows: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .fs-1 {
@@ -655,12 +694,24 @@ nav ul li .container-svg {
   background-color: white;
 }
 
+.primary {
+  background-color: rgba(103, 199, 195, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.active {
+  min-width: 150px;
+}
+
 @media (min-width: 768px) {
   header #bars {
     display: none !important;
   }
   header #sticky {
     display: none;
+  }
+  #centerPanel {
+    border-radius: 15px 15px 0 0 !important;
   }
   #menuList {
     transition: none !important;
