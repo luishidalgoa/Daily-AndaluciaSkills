@@ -112,3 +112,19 @@
 .form_active{
   box-shadow: 0 0 0 2px #174ea55f, 0 0 0 5px #3b83f65f;
 }
+
+
+
+
+
+@keyframes perfilOptionsShake {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-45%);
+  }
+  100% {
+    transform: unset;
+  }
+}

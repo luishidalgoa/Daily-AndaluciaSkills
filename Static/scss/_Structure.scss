@@ -271,40 +271,43 @@ html {
 body {
   height: fit-content;
 }
+#centerPanel{
+  position: relative;
+  footer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
 
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
+    form {
+      border-radius: 0.8rem;
+      transition: all .5s;
+      width: 90%;
+      max-height: 45px;
+      flex-wrap: nowrap;
+      box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
 
-  form {
-    border-radius: 0.8rem;
-    transition: all .5s;
-    width: 90%;
-    max-height: 45px;
-    flex-wrap: nowrap;
-    box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
+      button {
+        background-color: unset;
+        border: 0;
+        padding: 4px;
+      }
 
-    button {
-      background-color: unset;
-      border: 0;
-      padding: 4px;
-    }
+      input[type="text"] {
+        width: 100% !important;
+        border: 0 !important;
+        outline: none;
+        overflow: auto;
+        padding-right: 5px;
+      }
 
-    input[type="text"] {
-      width: 100% !important;
-      border: 0 !important;
-      outline: none;
-      overflow: auto;
-      padding-right: 5px;
-    }
-
-    svg[viewBox="0 0 36 36"] {
-      margin-left: auto !important;
-      transform: translateX(-5px);
+      svg[viewBox="0 0 36 36"] {
+        margin-left: auto !important;
+        transform: translateX(-5px);
+      }
     }
   }
 }
@@ -456,14 +459,13 @@ nav {
 .TaskNote {
   height: 0 !important;
   overflow: hidden;
-  transition: height .6s 0s linear !important;
 }
 
 .task[tabindex="0"] .TaskNote {
   position: relative;
   overflow: auto;
   height: fit-content !important;
-  min-height: 40px;
+  min-height: 40px!important;
   filter: opacity(0.5);
 
   div {

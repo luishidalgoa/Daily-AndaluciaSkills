@@ -84,7 +84,7 @@ class List {
                         
                         </div>
                     </section>
-                    <footer class="bg-clear" style="position: relative;bottom: 0">
+                    <footer class="bg-clear">
                             <form action="javascript:void(0);" class="d-flex bg-white">
                                 <button type="submit" class="rounded-1">
                                     <svg style="height: 2em;" viewBox="0 0 24 24">

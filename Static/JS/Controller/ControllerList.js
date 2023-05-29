@@ -1,6 +1,6 @@
 class ControllerList {
     constructor(list) {
-        this.list=list;
+        this.list = list;
     }
 
     /**
@@ -31,6 +31,7 @@ class ControllerList {
         }
         TasksDAO.saveAll(document.querySelectorAll('.task'), this.list)
         updateDraggables()
+        this.updateMenuList()
     }
 
     /**
@@ -70,6 +71,11 @@ class ControllerList {
         })
     }
 
+    /**
+     * Este método toma como referencia el tamaño de la pantalla para activar una serie de eventos importantes
+     * para mantener la consistencia de la vista respecto a la responsive. De modo que activara
+     * el panel de listas cuando esté en modo escritorio además de activar todos los eventos pertinentes
+     */
     resize() {
         const menu_bars = document.getElementById('bars')
         if (window.innerWidth >= 768) {
@@ -77,10 +83,21 @@ class ControllerList {
             menu_bars.children[1].classList.remove('d-none')
             menu_bars.children[2].classList.remove('bars_active')
             if (!document.getElementById('menuList').classList.contains('active')) {
-                this.menuList()
+                this.menuList(() => {
+                    this.activeMenuList()
+                })
             }
         } else {
             document.getElementById('menuList').classList.remove('active')
+        }
+    }
+
+    activeMenuList() {
+        const menuList = document.getElementById('menuList')
+        const ul = document.querySelector('#menuList ul')
+        menuList.classList.toggle('active')
+        if (!menuList.classList.contains('active')) {
+            ul.innerHTML = ''
         }
     }
 
@@ -151,16 +168,19 @@ class ControllerList {
             menu_bars.children[0].classList.toggle('bars_active')
             menu_bars.children[1].classList.toggle('d-none')
             menu_bars.children[2].classList.toggle('bars_active');
-            this.menuList()
+            this.menuList(() => {
+                this.menuList()
+            })
         });
     }
 
     /**
      * Este componente cargara todo lo necesario para que el menu de listas se ejecute correctamente
      * Este menu mostrara todas las listas del usuario ademas de permitir un "Crud" de ellas
+     * @param callback se ejecutara el método introducido por parámetro. Lo que cambiara la funcionalidad
+     * del método una vez haya finalizado sus procedimientos
      */
-    menuList() {
-        const menuList = document.getElementById('menuList')
+    menuList(callback) {
         const ul = document.querySelector('#menuList ul')
         const lists = ul.querySelectorAll('li')
 
@@ -177,17 +197,33 @@ class ControllerList {
 
                 setTimeout(() => {
                     ul.querySelector('#' + id).addEventListener('click', () => {
-                        console.log('cdd')
                         controllerList = new ControllerList(value)
                         controllerList.loadList(document.querySelector('body'))
                     })
                 }, 1)
             }
         })
-        menuList.classList.toggle('active')
-        if (!menuList.classList.contains('active')) {
-            ul.innerHTML = ''
-        }
+        callback()
+    }
+
+    /**
+     * Actualizará automáticamente el panel de Listas. de modo que cuando borras o creas una tarea. Este cambio
+     * se verá reflejado en la lista de su panel correspondiente
+     */
+    updateMenuList() {
+        const ul = document.querySelector('#menuList ul')
+        const lists = ul.querySelectorAll('li')
+        const result = (ListDAO.searchAll().filter(function (value) { //value = List
+            const id = value.name.trim().replace(/\s/g, "")
+            return id !== lists.keys()
+        }))
+        ul.innerHTML = ''
+        result.forEach((value, i) => {
+            const id = value.name.trim().replace(/\s/g, "")
+            if (lists[i].id === id) {
+                ul.innerHTML += value.getMenuHtml(value)
+            }
+        }, 0)
     }
 
     /**
@@ -198,7 +234,7 @@ class ControllerList {
         const form = document.querySelector('#menuList')
         form.querySelector('#addList button').addEventListener('click', () => {
             if (form.querySelector('#addList input[type="text"]').value.length > 0 && localStorage.getItem(form.querySelector('#addList input[type="text"]').value) === null) {
-                ListDAO.save(ListDAO.searchList(form.querySelector('#addList input[type="text"]').value))
+                ListDAO.save(form.querySelector('#addList input[type="text"]').value)
                 controllerList = new ControllerList(ListDAO.searchList(form.querySelector('#addList input[type="text"]').value))//Le pasamos el nombre de la lista
                 controllerList.loadList(document.querySelector('body'))
             }

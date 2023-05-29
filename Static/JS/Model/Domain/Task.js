@@ -29,7 +29,6 @@ class Task {
      */
     editable(taskDOM) {
         taskDOM.querySelectorAll('span').forEach((value)=>{
-            console.log(value)
             value.addEventListener('dblclick', () => { //permite edit el titulo
                 value.setAttribute('contenteditable', 'true');
             })
