@@ -28,10 +28,13 @@
 <script src="../Static/JS/Model/Domain/Login.js"></script>
 <script type="text/javascript">
     let login = new Login(document.body)
-    let controllerList=new ControllerList('My Tasks');
-    if(localStorage.getItem('My Day')===null){
-        new ControllerList('My Day')
+    if(ListDAO.searchList('My Tasks')===null){
+        ListDAO.save('My Tasks')
     }
+    if(ListDAO.searchList('My Day')===null){
+        ListDAO.save('My Day')
+    }
+    let controllerList=new ControllerList(ListDAO.searchList('My Tasks'));
     login.show(controllerList)
 </script>
 </html>

@@ -16,10 +16,14 @@ class ListDAO{
 
     /**
      * creará una nueva lista begun exista o no. Sí existe. automáticamente, serializará todos sus objetos
-     * @param listName nombre de la lista nueva o existente donde se guardaran los objetos o se creara
+     * @param list nombre de la lista nueva o existente donde se guardaran los objetos o se creara
      */
-    static save(listName){
-        localStorage.setItem(listName, JSON.stringify(new List(listName,[])))
+    static save(list){
+        if(this.searchList(list.name)===null){
+            localStorage.setItem(list, JSON.stringify(new List(list,[])))
+        }else{
+
+        }
     }
 
     /**
@@ -29,13 +33,11 @@ class ListDAO{
      * @returns {List} devolve la Lista, ya sea vacía o con contenido. Seguin exista o no exista previamente
      */
     static searchList(listName){
-        let result = new List(listName,[]);
+        let result = null;
         const data = JSON.parse(localStorage.getItem(listName))
         if(data!==null){
             result = new List(listName,TasksDAO.searchAll(listName))
             result.svg=data.svg
-        }else{
-            this.save(listName)
         }
         return result;
     }

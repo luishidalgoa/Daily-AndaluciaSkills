@@ -25,7 +25,7 @@ class TasksDAO{
         if (JSON.parse(localStorage.getItem(listName)).tasks) {
             const aux = JSON.parse(localStorage.getItem(listName));
             for (const task of aux.tasks) {
-                const newTask = new Task(task.id, task.Title, "", "")
+                const newTask = new Task(task.id, task.Title, task.Note, "")
                 result.push(newTask)
             }
         }
@@ -42,8 +42,8 @@ class TasksDAO{
         let result = []
         node.forEach((value) => {
             const id = value.id.replace(/^Task_/, '')
-            const text = value.textContent.replace(/\n+/g, '\n').trim()
-            const note = ""
+            const text = value.querySelector('div span').textContent.replace(/\n+/g, '\n').trim()
+            const note = value.querySelector('.TaskNote span').textContent.replace(/\n+/g, '\n').trim()
             const date = ""
             result.push(new Task(id, text, note, date))
         })

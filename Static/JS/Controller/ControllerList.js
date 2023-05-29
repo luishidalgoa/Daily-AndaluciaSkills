@@ -1,6 +1,6 @@
 class ControllerList {
-    constructor(name) {
-        this.list = ListDAO.searchList(name);
+    constructor(list) {
+        this.list=list;
     }
 
     /**
@@ -177,7 +177,8 @@ class ControllerList {
 
                 setTimeout(() => {
                     ul.querySelector('#' + id).addEventListener('click', () => {
-                        controllerList = new ControllerList(value.name)
+                        console.log('cdd')
+                        controllerList = new ControllerList(value)
                         controllerList.loadList(document.querySelector('body'))
                     })
                 }, 1)
@@ -197,7 +198,8 @@ class ControllerList {
         const form = document.querySelector('#menuList')
         form.querySelector('#addList button').addEventListener('click', () => {
             if (form.querySelector('#addList input[type="text"]').value.length > 0 && localStorage.getItem(form.querySelector('#addList input[type="text"]').value) === null) {
-                controllerList = new ControllerList(form.querySelector('#addList input[type="text"]').value)//Le pasamos el nombre de la lista
+                ListDAO.save(ListDAO.searchList(form.querySelector('#addList input[type="text"]').value))
+                controllerList = new ControllerList(ListDAO.searchList(form.querySelector('#addList input[type="text"]').value))//Le pasamos el nombre de la lista
                 controllerList.loadList(document.querySelector('body'))
             }
         })
