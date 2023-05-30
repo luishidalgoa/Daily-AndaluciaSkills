@@ -106,8 +106,8 @@ header #bars .bars_active:nth-child(3) {
 section {
   max-width: 100%;
   width: 100%;
+  overflow: auto;
   max-height: calc(100vh - 130px);
-  overflow: initial;
 }
 section #TaskContainer {
   align-items: center;
@@ -766,7 +766,7 @@ nav ul li .container-svg {
   }
 }
 .form_active {
-  box-shadow: 0 0 0 2px rgba(23, 78, 165, 0.3725490196), 0 0 0 5px rgba(59, 131, 246, 0.3725490196);
+  box-shadow: 0 0 0 2px rgba(23, 78, 165, 0.3725490196), 0 0 0 5px rgba(59, 131, 246, 0.3725490196) !important;
 }
 
 @keyframes perfilOptionsShake {
