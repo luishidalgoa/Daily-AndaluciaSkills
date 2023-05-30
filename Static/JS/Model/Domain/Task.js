@@ -48,9 +48,9 @@ class Task {
         const TaskContainer = document.querySelector('#TaskContainer')
         TaskContainer.querySelector('#Task_' + this.id).addEventListener('change', () => {
             if (document.querySelector('#TaskContainer').querySelectorAll('.task input[type="checkbox"]:checked').length <= 0) {
-                btnDelete.classList.remove('navActive')
+                document.querySelector('#menuContext').classList.add('view')
             } else {
-                btnDelete.classList.add('navActive')
+                document.querySelector('#menuContext').classList.remove('view')
             }
         })
     }
@@ -62,7 +62,7 @@ class Task {
     getHtml() {
         return `
             <div id="Task_` + this.id + `" tabindex="-1" draggable="true" class="task col-12 row bg-white p-2 overflow-auto" style="align-items: center;">
-                <div class="d-flex flex-nowrap col-12">
+                <div class="d-flex flex-nowrap p-0 col-12">
                     <div class="checkbox-wrapper-12">
                         <div class="cbx">
                             <input class="d-none" id="cbx-12" type="checkbox">

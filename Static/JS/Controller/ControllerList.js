@@ -31,7 +31,6 @@ class ControllerList {
         }
         TasksDAO.saveAll(document.querySelectorAll('.task'), this.list)
         updateDraggables()
-        this.updateMenuList()
     }
 
     /**
@@ -51,25 +50,41 @@ class ControllerList {
      * de una página web
      */
     initializeEvents() {
-        //ANIMATION LOTTIE
-        const animDelete = bodymovin.loadAnimation({
-            wrapper: document.querySelector('#delete .container-svg'),
-            animType: 'svg',
-            loop: false,
-            autoplay: false,
-            path: 'https://lottie.host/258a6c86-fba6-4b0b-9ebc-64b9f1e72074/82fHo4oK3i.json'
-        });
         //Buscamos todos los elementos interactivos de la página
         this.addTask()
-        this.deleteTasks(animDelete);
+        this.deleteTasks();
         this.searchTasks()
         this.bars()
         this.addList()
         this.resize()
+        this.selectAll()
+        { //Menu seleccionable
+            const input = document.querySelector('#navMenu');
+            this.contextMenu(input.parentElement,input)
+        }
         window.addEventListener('resize', () => {
             this.resize()
         })
     }
+
+    /**
+     * Evento:
+     * Este evento recogerá un nodo. (preferiblemente un contextMenu), Ejecutara un evento el cual estará pendiente de donde
+     * se clicke. Si se clicka dentro de algún hijo del nodo. Entonces se mantendrá el checkbox activado. Sin embargo
+     * si se clicka fuera. Este se desactivará
+     */
+    contextMenu(parentNode, nodeInput) {
+        nodeInput.addEventListener('change', () => {
+            const clickHandler = (e) => {
+                if (!parentNode.parentElement.contains(e.target)) {
+                    nodeInput.checked = false;
+                    document.removeEventListener('click', clickHandler);
+                }
+            };
+
+            document.addEventListener('click', clickHandler);
+        })
+    };
 
     /**
      * Este método toma como referencia el tamaño de la pantalla para activar una serie de eventos importantes
@@ -90,6 +105,22 @@ class ControllerList {
         } else {
             document.getElementById('menuList').classList.remove('active')
         }
+    }
+
+    selectAll() {
+        const btnSelect = document.querySelector('#selectAll label')
+        btnSelect.addEventListener('change', () => {
+            const tasks = document.querySelectorAll('.task')
+            if (btnSelect.querySelector('input').checked) {
+                tasks.forEach((value) => {
+                    value.querySelector('input[type="checkbox"]').checked = true;
+                })
+            } else {
+                tasks.forEach((value) => {
+                    value.querySelector('input[type="checkbox"]').checked = false;
+                })
+            }
+        })
     }
 
     activeMenuList() {
@@ -113,6 +144,7 @@ class ControllerList {
             if (value.length > 0) {
                 this.list.tasks.push(this.newTask(value))
                 this.updateTasksContainer()
+                this.updateMenuList()
                 formAdd.querySelector('input[type="text"]').value = ""
             }
         });
@@ -131,26 +163,32 @@ class ControllerList {
      * Evento eliminará las tareas seleccionadas por el usuario. La filosofía de este methods es devolver en forma de array
      * todas las tareas que no tengan activado el check. de modo que se eliminaran automáticamente todas aquellas que
      * tengan el check
-     * @param animItem animación que se ejecutara cuando se cumpla la condición de que
      */
-    deleteTasks(animItem) {
+    deleteTasks() {
+        const animItem = bodymovin.loadAnimation({
+            wrapper: document.querySelector('#delete .container-svg'),
+            animType: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'https://lottie.host/258a6c86-fba6-4b0b-9ebc-64b9f1e72074/82fHo4oK3i.json'
+        });
         const btnDelete = document.querySelector('nav ul #delete')
         btnDelete.addEventListener('click', () => {
             if (document.querySelectorAll('.task input[type="checkbox"]:checked').length > 0) {
                 animItem.play()
-                animItem.addEventListener('complete', function () {
+                animItem.addEventListener('complete', () => {
                     animItem.goToAndStop(0);
-                    document.querySelector('nav #delete').classList.remove('navActive')
                 });
             }
 
-
+            //Eliminará los que tengan el check
             this.list.tasks = this.list.tasks.filter(function (value) {
                 if (document.getElementById('Task_' + value.id).querySelector('input:checked') === null) {
                     return value;
                 }
             })
             this.updateTasksContainer()
+            this.updateMenuList()
             TasksDAO.saveAll(document.querySelectorAll('.task'), this.list)
         })
     }
@@ -169,7 +207,7 @@ class ControllerList {
             menu_bars.children[1].classList.toggle('d-none')
             menu_bars.children[2].classList.toggle('bars_active');
             this.menuList(() => {
-                this.menuList()
+                this.activeMenuList()
             })
         });
     }
@@ -194,13 +232,7 @@ class ControllerList {
             }
             if (!boolean) { //SI NO EXISTE EN EL DOM ENTONCES CARGAMOS LA LISTA EN EL MENU
                 ul.innerHTML += value.getMenuHtml(value)
-
-                setTimeout(() => {
-                    ul.querySelector('#' + id).addEventListener('click', () => {
-                        controllerList = new ControllerList(value)
-                        controllerList.loadList(document.querySelector('body'))
-                    })
-                }, 1)
+                value.changeList(ul)
             }
         })
         callback()
@@ -221,6 +253,7 @@ class ControllerList {
         result.forEach((value, i) => {
             const id = value.name.trim().replace(/\s/g, "")
             if (lists[i].id === id) {
+                value.changeList(ul)
                 ul.innerHTML += value.getMenuHtml(value)
             }
         }, 0)
@@ -254,6 +287,9 @@ class ControllerList {
             const result = TasksDAO.filter(text, this.list.name)
             for (const aux of result) {
                 document.querySelector('#TaskContainer').innerHTML += aux.getHtml()
+                setTimeout(() => {
+                    aux.initializeEvents()
+                }, 1)
             }
         })
     }

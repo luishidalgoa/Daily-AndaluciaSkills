@@ -106,8 +106,8 @@ header #bars .bars_active:nth-child(3) {
 section {
   max-width: 100%;
   width: 100%;
-  overflow: auto;
   max-height: calc(100vh - 130px);
+  overflow: initial;
 }
 section #TaskContainer {
   align-items: center;
@@ -322,18 +322,6 @@ nav ul li * {
 }
 nav ul li .container-svg {
   max-height: 40px;
-  width: 100%;
-}
-
-#delete {
-  height: 0;
-  width: 40px;
-  max-height: 40px;
-  transition: height 0.4s 0s linear;
-}
-
-.navActive {
-  height: 40px !important;
 }
 
 #contains #menuList {
@@ -384,10 +372,6 @@ nav ul li .container-svg {
   padding-right: 5px;
 }
 
-.task div {
-  padding: 0;
-}
-
 .TaskNote {
   height: 0 !important;
   overflow: hidden;
@@ -413,6 +397,118 @@ nav ul li .container-svg {
   grid-auto-rows: auto;
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+
+#pointsOptions {
+  width: 35px;
+  transform: scale(0.7);
+  overflow: visible;
+  cursor: pointer;
+}
+
+#pointsOptions:hover #Circle1 {
+  animation: perfilOptionsShake 0.5s 0s both;
+}
+
+#pointsOptions:hover #Circle2 {
+  animation: perfilOptionsShake 0.5s 0.2s both;
+}
+
+#pointsOptions:hover #Circle3 {
+  animation: perfilOptionsShake 0.5s 0.4s both;
+}
+
+#navMenu:checked ~ #menuContext {
+  top: 30px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.7);
+  min-width: max-content;
+  z-index: 10000;
+  visibility: visible;
+  height: auto !important;
+}
+
+#menuContext {
+  height: 0;
+  visibility: hidden;
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+}
+#menuContext ul {
+  display: flex;
+}
+#menuContext ul li:nth-child(1) {
+  border-bottom: 1px solid rgba(8, 0, 8, 0.2);
+  transform: translateY(2px);
+}
+#menuContext ul li {
+  padding: 2px 5px 2px 5px;
+  max-height: 30px !important;
+  font-weight: 300;
+  font-family: serif;
+}
+#menuContext ul li .container-svg {
+  transform: translate(-5px, -2px);
+  position: relative;
+}
+#menuContext ul li .container-svg svg {
+  transform: unset !important;
+  max-height: 30px;
+  min-height: 30px;
+}
+#menuContext ul #selectAll {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#menuContext ul #selectAll p {
+  margin: 0;
+}
+#menuContext ul #selectAll .checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+#menuContext ul #selectAll .checkbox input[type=checkbox] {
+  opacity: 0;
+  position: absolute;
+}
+#menuContext ul #selectAll .checkbox .checkmark {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+#menuContext ul #selectAll .checkbox input[type=checkbox]:checked + .checkmark {
+  background-color: #0078d4;
+  border-color: #0078d4;
+}
+#menuContext ul #selectAll .checkbox input[type=checkbox]:checked + .checkmark:after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: transform 0.2s ease;
+  transform: scale(1);
+}
+#menuContext ul #selectAll .checkbox .checkmark:after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: transparent;
+  transform: scale(0);
+  transition: transform 0.2s ease;
 }
 
 .fs-1 {
