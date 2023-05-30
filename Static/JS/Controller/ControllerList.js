@@ -29,7 +29,7 @@ class ControllerList {
                 task.initializeEvents()
             }, 1)
         }
-        TasksDAO.saveAll(document.querySelectorAll('.task'), this.list)
+        this.list=TasksDAO.saveAll(document.querySelectorAll('.task'), this.list)
         updateDraggables()
     }
 
@@ -114,10 +114,12 @@ class ControllerList {
             if (btnSelect.querySelector('input').checked) {
                 tasks.forEach((value) => {
                     value.querySelector('input[type="checkbox"]').checked = true;
+                    document.querySelector('#delete').classList.add('active')
                 })
             } else {
                 tasks.forEach((value) => {
                     value.querySelector('input[type="checkbox"]').checked = false;
+                    document.querySelector('#delete').classList.remove('active')
                 })
             }
         })
@@ -174,6 +176,7 @@ class ControllerList {
         });
         const btnDelete = document.querySelector('nav ul #delete')
         btnDelete.addEventListener('click', () => {
+            console.log(document.querySelectorAll('.task input:checked'))
             if (document.querySelectorAll('.task input[type="checkbox"]:checked').length > 0) {
                 animItem.play()
                 animItem.addEventListener('complete', () => {
@@ -181,10 +184,12 @@ class ControllerList {
                 });
             }
 
-            //Eliminará los que tengan el check
-            this.list.tasks = this.list.tasks.filter(function (value) {
-                if (document.getElementById('Task_' + value.id).querySelector('input:checked') === null) {
-                    return value;
+            this.list.tasks=this.list.tasks.filter((value,i)=>{
+                const tasks=document.querySelectorAll('.task')
+                if(tasks[i]!==undefined && tasks[i].querySelector('.task input:checked') === null || document.querySelector('#Task_'+value.id)===null){
+                    return value
+                }else{
+                    i++;
                 }
             })
             this.updateTasksContainer()

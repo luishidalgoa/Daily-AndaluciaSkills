@@ -48,9 +48,9 @@ class Task {
         const TaskContainer = document.querySelector('#TaskContainer')
         TaskContainer.querySelector('#Task_' + this.id).addEventListener('change', () => {
             if (document.querySelector('#TaskContainer').querySelectorAll('.task input[type="checkbox"]:checked').length <= 0) {
-                document.querySelector('#menuContext').classList.add('view')
+                document.querySelector('#delete').classList.remove('active')
             } else {
-                document.querySelector('#menuContext').classList.remove('view')
+                document.querySelector('#delete').classList.add('active')
             }
         })
     }

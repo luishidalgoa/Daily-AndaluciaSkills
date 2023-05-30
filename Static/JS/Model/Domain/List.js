@@ -73,8 +73,8 @@ class List {
                         </div>
                     </div>
                 </form>
-                <div id="centerPanel" class="bg-clear" style="overflow: auto;max-height: calc(100vh - 70px);width: 100%;min-height: calc(100vh - 70px);">
-                    <section class="d-flex flex-column p-4 bg-clear">
+                <div id="centerPanel" class="" style="overflow: auto;max-height: calc(100vh - 86px);width: 100%;min-height: calc(100vh - 86px);">
+                    <section class="d-flex flex-column p-4">
                          <nav class="d-flex" style="position:relative;width: 100%">
                             <ul class="d-flex flex-row-reverse col-12 justify-content-start" style="max-width: 100%">
                                 <li style="display: flex;flex-direction: row-reverse;">
@@ -89,7 +89,7 @@ class List {
                                         </svg>
                                     </label>
                                     <input type="checkbox" class="hidden" style="visibility: hidden" id="navMenu">
-                                    <form action="" class="shadow-lg" id="menuContext">
+                                    <form action="" class="shadow" id="menuContext">
                                         <ul class="p-0 m-0 d-flex flex-column">
                                             <li class="d-flex" id="selectAll">
                                                 <label class="checkbox">
@@ -98,7 +98,7 @@ class List {
                                                 </label>
                                                 <p>Select All</p>
                                             </li>
-                                            <li id="delete" class="d-flex">
+                                            <li id="delete" class="">
                                                 <div class="container-svg"></div>
                                                 <span>Delete</span>
                                             </li>

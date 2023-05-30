@@ -2,6 +2,9 @@
   min-width: 150px;
 }
 @media (min-width: 768px) {
+  #contains{
+    padding: .5rem!important;
+  }
   header {
     #bars {
       display: none !important;
@@ -12,7 +15,7 @@
     }
   }
   #centerPanel {
-    border-radius: 15px 15px 0 0 !important;
+    border-radius: 15px !important;
   }
   #menuList {
     transition: none !important;
