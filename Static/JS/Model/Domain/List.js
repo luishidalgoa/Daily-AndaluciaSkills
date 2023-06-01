@@ -24,7 +24,12 @@ class List {
         }
         return autoIncrement;
     }
+    orderByAlphabet(){
+        
+    }
+    orderByDate(){
 
+    }
     /**
      * Estructura html de cualquier lista
      * @returns {string}

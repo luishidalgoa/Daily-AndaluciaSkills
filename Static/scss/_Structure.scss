@@ -271,9 +271,11 @@ html {
 body {
   height: fit-content;
 }
-#centerPanel{
+
+#centerPanel {
   position: relative;
   background-color: aliceblue;
+
   footer {
     position: absolute;
     display: flex;
@@ -318,6 +320,7 @@ nav {
   ul {
     padding: 0;
     margin-bottom: 0;
+
     #search {
       width: calc(50% + 100px);
       position: relative;
@@ -447,7 +450,7 @@ nav {
   position: relative;
   overflow: auto;
   height: fit-content !important;
-  min-height: 40px!important;
+  min-height: 40px !important;
   filter: opacity(0.5);
 
   div {
@@ -488,15 +491,16 @@ nav {
 #pointsOptions:hover #Circle3 {
   animation: perfilOptionsShake 0.5s 0.4s both;
 }
-#navMenu:checked ~ #menuContext{
+
+#navMenu:checked ~ #menuContext {
   top: 30px;
   padding: .5rem;
   border-radius: 8px;
-  background-color: rgb(255, 255, 255,.7);
+  background-color: rgb(255, 255, 255, .7);
   min-width: max-content;
   z-index: 10000;
   visibility: visible;
-  height: auto!important;
+  height: auto !important;
 }
 
 #menuContext {
@@ -505,25 +509,31 @@ nav {
   position: absolute;
   display: flex;
   flex-direction: row-reverse;
+
   ul {
     display: flex;
-    .active{
-      left: unset!important;
-      width: auto!important;
-      min-width: unset!important;
-      display: flex!important;
+
+    .active {
+      left: unset !important;
+      width: auto !important;
+      min-width: unset !important;
+      display: flex !important;
     }
-    #delete{
+
+    #delete {
       display: none;
     }
+
     li {
       padding: 2px 5px 2px 5px;
       max-height: 30px !important;
       font-weight: 300;
       font-family: serif;
+
       .container-svg {
         transform: translate(-5px, -2px);
         position: relative;
+
         svg {
           transform: unset !important;
           max-height: 30px;
@@ -531,12 +541,14 @@ nav {
         }
       }
     }
+
     #selectAll {
       //SELECT ALL
       position: relative;
       display: flex;
       align-items: center;
       gap: 10px;
+
       p {
         margin: 0;
       }
@@ -592,12 +604,62 @@ nav {
     }
   }
 }
+
 // }
 
 ::-webkit-scrollbar {
   width: 5px;
 }
+
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+
+//CALENDAR
+
+.calendar {
+  max-width: 350px;
+
+  .header-days {
+    font-family: 'Lora', serif;
+    margin-bottom: 10px;
+  }
+
+  .calendar-body {
+    .day-cell {
+      border: 1px solid black;
+      border-radius: 50px;
+      width: 35px;
+      padding: 5px;
+      font-family: 'Lora', serif;
+      cursor: pointer;
+    }
+
+    .day-cell-disable {
+      color: gray;
+      border: unset;
+    }
+    .day-cell-active {
+      background-color: rgb(111, 208, 203, .5);
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row-gap: 10px;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .control {
+    cursor: pointer;
+  }
+
+  .calendar-header span {
+    font-size: 1.5rem;
+    font-family: 'Lora', serif;
+  }
 }
