@@ -22,8 +22,8 @@ class TasksDAO{
      */
     static searchAll(listName) {
         let result=[]
-        if (JSON.parse(localStorage.getItem(listName)).tasks) {
-            const aux = JSON.parse(localStorage.getItem(listName));
+        const aux = JSON.parse(localStorage.getItem(listName));
+        if (aux.tasks) {
             for (const task of aux.tasks) {
                 const newTask = new Task(task.id, task.Title, task.Note, "")
                 result.push(newTask)
@@ -32,6 +32,16 @@ class TasksDAO{
         return result
     }
 
+    static searchTask(listName,id) {
+        const list= JSON.parse(localStorage.getItem(listName))
+        if (list.tasks) {
+            for (const task of list.tasks) {
+                if('Task_'+task.id===id){
+                    return new Task(task.id, task.Title, task.Note, "")
+                }
+            }
+        }
+    }
     /**
      * Serializa una lista completa en el localStorage. Incluyendo sus tareas y demás campos. La impedancia de datos
      * es de tipo Eager. Ya que serializamos un tipo List y dentro de él una colección de tipo Task
@@ -50,5 +60,6 @@ class TasksDAO{
         list.tasks=result
         result=list;
         localStorage.setItem(list.name, JSON.stringify(result))
+        return result;
     }
 }

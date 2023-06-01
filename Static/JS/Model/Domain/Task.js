@@ -29,7 +29,6 @@ class Task {
      */
     editable(taskDOM) {
         taskDOM.querySelectorAll('span').forEach((value)=>{
-            console.log(value)
             value.addEventListener('dblclick', () => { //permite edit el titulo
                 value.setAttribute('contenteditable', 'true');
             })
@@ -49,9 +48,9 @@ class Task {
         const TaskContainer = document.querySelector('#TaskContainer')
         TaskContainer.querySelector('#Task_' + this.id).addEventListener('change', () => {
             if (document.querySelector('#TaskContainer').querySelectorAll('.task input[type="checkbox"]:checked').length <= 0) {
-                btnDelete.classList.remove('navActive')
+                document.querySelector('#delete').classList.remove('active')
             } else {
-                btnDelete.classList.add('navActive')
+                document.querySelector('#delete').classList.add('active')
             }
         })
     }
@@ -63,7 +62,7 @@ class Task {
     getHtml() {
         return `
             <div id="Task_` + this.id + `" tabindex="-1" draggable="true" class="task col-12 row bg-white p-2 overflow-auto" style="align-items: center;">
-                <div class="d-flex flex-nowrap col-12">
+                <div class="d-flex flex-nowrap p-0 col-12">
                     <div class="checkbox-wrapper-12">
                         <div class="cbx">
                             <input class="d-none" id="cbx-12" type="checkbox">
@@ -74,7 +73,9 @@ class Task {
                         </div>
                     </div>
                     <span contenteditable="false" class="p-1">` + this.Title + `</span>
-                    <svg id="calendar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" stroke-width="2.5" stroke="#CACBD2" fill="none" class="duration-300 transform transition-all"><rect x="9.59" y="9.59" width="44.82" height="44.82" rx="2.5"></rect><path d="M9.59 20.59h44.82M19.7 9.59v-5M43.66 9.59v-5M16.14 27.92h6.15v6.15h-6.15zM28.78 27.92h6.15v6.15h-6.15zM41.26 27.92h6.15v6.15h-6.15zM16.36 39.68h6.15v6.15h-6.15zM29.01 39.68h6.15v6.15h-6.15zM41.49 39.68h6.15v6.15h-6.15z"></path></svg>
+                    <label for="date">
+                        <svg id="calendar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" stroke-width="2.5" stroke="#CACBD2" fill="none" class="duration-300 transform transition-all"><rect x="9.59" y="9.59" width="44.82" height="44.82" rx="2.5"></rect><path d="M9.59 20.59h44.82M19.7 9.59v-5M43.66 9.59v-5M16.14 27.92h6.15v6.15h-6.15zM28.78 27.92h6.15v6.15h-6.15zM41.26 27.92h6.15v6.15h-6.15zM16.36 39.68h6.15v6.15h-6.15zM29.01 39.68h6.15v6.15h-6.15zM41.49 39.68h6.15v6.15h-6.15z"></path></svg>
+                    </label>
                 </div>
                 <div id="TaskNote_` + this.id + `" class="TaskNote col-12">
                     <div class="p-2">

@@ -4,7 +4,15 @@ class List {
         this.tasks = tasks;
         this.svg='';
     }
-
+    changeList(Node){
+        setTimeout(() => {
+            const id = this.name.trim().replace(/\s/g, "")
+            Node.querySelector('#' + id).addEventListener('click', () => {
+                controllerList = new ControllerList(this)
+                controllerList.loadList(document.querySelector('body'))
+            })
+        }, 1)
+    }
     /**
      * Genera un nuevo id auto incremental. Mientras exista un id, el puntero interno avanzara en +1
      * @returns {number} el valor del puntero el cual no lo posee ninguna otra tarea
@@ -16,7 +24,12 @@ class List {
         }
         return autoIncrement;
     }
+    orderByAlphabet(){
+        
+    }
+    orderByDate(){
 
+    }
     /**
      * Estructura html de cualquier lista
      * @returns {string}
@@ -65,12 +78,37 @@ class List {
                         </div>
                     </div>
                 </form>
-                <div id="centerPanel" class="bg-clear" style="overflow: auto;max-height: calc(100vh - 70px);width: 100%;min-height: calc(100vh - 70px);">
-                    <section class="d-flex flex-column p-4 bg-clear">
-                         <nav class="d-flex navActive" style="position:relative;width: 100%">
+                <div id="centerPanel" class="" style="overflow: auto;max-height: calc(100vh - 86px);width: 100%;min-height: calc(100vh - 86px);">
+                    <section class="d-flex flex-column p-4">
+                         <nav class="d-flex" style="position:relative;width: 100%">
                             <ul class="d-flex flex-row-reverse col-12 justify-content-start" style="max-width: 100%">
-                                <li id="delete" class="d-flex">
-                                    <div class="container-svg"></div>
+                                <li style="display: flex;flex-direction: row-reverse;">
+                                    <label for="navMenu">
+                                        <svg viewBox="0 0 36 10" fill="none" class="ml-2" id="pointsOptions"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="Group 1">
+                                                <circle id="Circle3" cx="31" cy="5" r="5" fill="black" />
+                                                <circle id="Circle2" cx="18" cy="5" r="5" fill="black" />
+                                                <circle id="Circle1" cx="5" cy="5" r="5" fill="black" />
+                                            </g>
+                                        </svg>
+                                    </label>
+                                    <input type="checkbox" class="hidden" style="visibility: hidden" id="navMenu">
+                                    <form action="" class="shadow" id="menuContext">
+                                        <ul class="p-0 m-0 d-flex flex-column">
+                                            <li class="d-flex" id="selectAll">
+                                                <label class="checkbox">
+                                                    <input type="checkbox">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <p>Select All</p>
+                                            </li>
+                                            <li id="delete" class="">
+                                                <div class="container-svg"></div>
+                                                <span>Delete</span>
+                                            </li>
+                                        </ul>
+                                    </form>
                                 </li>
                                 <li class="d-flex justify-content-start" id="search"">
                                     <div style="max-width: 100%;max-height: 100%;" class="shadow rounded-3">
@@ -84,7 +122,7 @@ class List {
                         
                         </div>
                     </section>
-                    <footer class="bg-clear" style="position: relative;bottom: 0">
+                    <footer class="bg-clear">
                             <form action="javascript:void(0);" class="d-flex bg-white">
                                 <button type="submit" class="rounded-1">
                                     <svg style="height: 2em;" viewBox="0 0 24 24">

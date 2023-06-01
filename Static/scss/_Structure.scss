@@ -272,39 +272,45 @@ body {
   height: fit-content;
 }
 
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
+#centerPanel {
+  position: relative;
+  background-color: aliceblue;
 
-  form {
-    border-radius: 0.8rem;
-    transition: all .5s;
-    width: 90%;
-    max-height: 45px;
-    flex-wrap: nowrap;
-    box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
+  footer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
 
-    button {
-      background-color: unset;
-      border: 0;
-      padding: 4px;
-    }
+    form {
+      border-radius: 0.8rem;
+      transition: all .5s;
+      width: 90%;
+      max-height: 45px;
+      flex-wrap: nowrap;
+      box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
 
-    input[type="text"] {
-      width: 100% !important;
-      border: 0 !important;
-      outline: none;
-      overflow: auto;
-      padding-right: 5px;
-    }
+      button {
+        background-color: unset;
+        border: 0;
+        padding: 4px;
+      }
 
-    svg[viewBox="0 0 36 36"] {
-      margin-left: auto !important;
-      transform: translateX(-5px);
+      input[type="text"] {
+        width: 100% !important;
+        border: 0 !important;
+        outline: none;
+        overflow: auto;
+        padding-right: 5px;
+      }
+
+      svg[viewBox="0 0 36 36"] {
+        margin-left: auto !important;
+        transform: translateX(-5px);
+      }
     }
   }
 }
@@ -371,28 +377,15 @@ nav {
 
       .container-svg {
         @include max-height(40px);
-        width: 100%;
       }
     }
   }
 }
 
-
-#delete {
-  height: 0;
-  width: 40px;
-  max-height: 40px;
-  transition: height .4s 0s linear;
-}
-
-.navActive {
-  height: 40px !important;
-}
-
 //Componente menuList
 #contains {
   #menuList {
-    max-height: calc(100vh - 70px);
+    max-height: calc(100vh - 86px);
     width: 0;
     position: relative;
     max-width: 200px;
@@ -417,7 +410,7 @@ nav {
     }
   }
 
-  div .active {
+  .active {
     left: 0 !important;
     width: fit-content !important;
   }
@@ -447,23 +440,17 @@ nav {
   }
 }
 
-.task {
-  div {
-    padding: 0;
-  }
-}
-
+//NOTAS
 .TaskNote {
   height: 0 !important;
   overflow: hidden;
-  transition: height .6s 0s linear !important;
 }
 
 .task[tabindex="0"] .TaskNote {
   position: relative;
   overflow: auto;
   height: fit-content !important;
-  min-height: 40px;
+  min-height: 40px !important;
   filter: opacity(0.5);
 
   div {
@@ -481,5 +468,198 @@ nav {
       word-wrap: break-word;
       white-space: pre-wrap;
     }
+  }
+}
+
+//Menu seleccionable NAV {
+
+#pointsOptions {
+  width: 35px;
+  transform: scale(0.7);
+  overflow: visible;
+  cursor: pointer;
+}
+
+#pointsOptions:hover #Circle1 {
+  animation: perfilOptionsShake 0.5s 0s both;
+}
+
+#pointsOptions:hover #Circle2 {
+  animation: perfilOptionsShake 0.5s 0.2s both;
+}
+
+#pointsOptions:hover #Circle3 {
+  animation: perfilOptionsShake 0.5s 0.4s both;
+}
+
+#navMenu:checked ~ #menuContext {
+  top: 30px;
+  padding: .5rem;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255, .7);
+  min-width: max-content;
+  z-index: 10000;
+  visibility: visible;
+  height: auto !important;
+}
+
+#menuContext {
+  height: 0;
+  visibility: hidden;
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+
+  ul {
+    display: flex;
+
+    .active {
+      left: unset !important;
+      width: auto !important;
+      min-width: unset !important;
+      display: flex !important;
+    }
+
+    #delete {
+      display: none;
+    }
+
+    li {
+      padding: 2px 5px 2px 5px;
+      max-height: 30px !important;
+      font-weight: 300;
+      font-family: serif;
+
+      .container-svg {
+        transform: translate(-5px, -2px);
+        position: relative;
+
+        svg {
+          transform: unset !important;
+          max-height: 30px;
+          min-height: 30px;
+        }
+      }
+    }
+
+    #selectAll {
+      //SELECT ALL
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      p {
+        margin: 0;
+      }
+
+      .checkbox {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .checkbox input[type="checkbox"] {
+        opacity: 0;
+        position: absolute;
+      }
+
+      .checkbox .checkmark {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+      }
+
+      .checkbox input[type="checkbox"]:checked + .checkmark {
+        background-color: #0078d4;
+        border-color: #0078d4;
+      }
+
+      .checkbox input[type="checkbox"]:checked + .checkmark:after {
+        content: "";
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #fff;
+        transition: transform 0.2s ease;
+        transform: scale(1);
+      }
+
+      .checkbox .checkmark:after {
+        content: "";
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: transparent;
+        transform: scale(0);
+        transition: transform 0.2s ease;
+      }
+    }
+  }
+}
+
+// }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+
+//CALENDAR
+
+.calendar {
+  max-width: 350px;
+
+  .header-days {
+    font-family: 'Lora', serif;
+    margin-bottom: 10px;
+  }
+
+  .calendar-body {
+    .day-cell {
+      border: 1px solid black;
+      border-radius: 50px;
+      width: 35px;
+      padding: 5px;
+      font-family: 'Lora', serif;
+      cursor: pointer;
+    }
+
+    .day-cell-disable {
+      color: gray;
+      border: unset;
+    }
+    .day-cell-active {
+      background-color: rgb(111, 208, 203, .5);
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row-gap: 10px;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .control {
+    cursor: pointer;
+  }
+
+  .calendar-header span {
+    font-size: 1.5rem;
+    font-family: 'Lora', serif;
   }
 }

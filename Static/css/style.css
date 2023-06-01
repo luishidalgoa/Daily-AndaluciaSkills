@@ -233,7 +233,12 @@ body {
   height: fit-content;
 }
 
-footer {
+#centerPanel {
+  position: relative;
+  background-color: aliceblue;
+}
+#centerPanel footer {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -241,7 +246,7 @@ footer {
   width: 100%;
   height: 60px;
 }
-footer form {
+#centerPanel footer form {
   border-radius: 0.8rem;
   transition: all 0.5s;
   width: 90%;
@@ -249,19 +254,19 @@ footer form {
   flex-wrap: nowrap;
   box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
 }
-footer form button {
+#centerPanel footer form button {
   background-color: unset;
   border: 0;
   padding: 4px;
 }
-footer form input[type=text] {
+#centerPanel footer form input[type=text] {
   width: 100% !important;
   border: 0 !important;
   outline: none;
   overflow: auto;
   padding-right: 5px;
 }
-footer form svg[viewBox="0 0 36 36"] {
+#centerPanel footer form svg[viewBox="0 0 36 36"] {
   margin-left: auto !important;
   transform: translateX(-5px);
 }
@@ -318,22 +323,10 @@ nav ul li * {
 }
 nav ul li .container-svg {
   max-height: 40px;
-  width: 100%;
-}
-
-#delete {
-  height: 0;
-  width: 40px;
-  max-height: 40px;
-  transition: height 0.4s 0s linear;
-}
-
-.navActive {
-  height: 40px !important;
 }
 
 #contains #menuList {
-  max-height: calc(100vh - 70px);
+  max-height: calc(100vh - 86px);
   width: 0;
   position: relative;
   max-width: 200px;
@@ -355,7 +348,7 @@ nav ul li .container-svg {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#contains div .active {
+#contains .active {
   left: 0 !important;
   width: fit-content !important;
 }
@@ -380,21 +373,16 @@ nav ul li .container-svg {
   padding-right: 5px;
 }
 
-.task div {
-  padding: 0;
-}
-
 .TaskNote {
   height: 0 !important;
   overflow: hidden;
-  transition: height 0.6s 0s linear !important;
 }
 
 .task[tabindex="0"] .TaskNote {
   position: relative;
   overflow: auto;
   height: fit-content !important;
-  min-height: 40px;
+  min-height: 40px !important;
   filter: opacity(0.5);
 }
 .task[tabindex="0"] .TaskNote div {
@@ -410,6 +398,169 @@ nav ul li .container-svg {
   grid-auto-rows: auto;
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+
+#pointsOptions {
+  width: 35px;
+  transform: scale(0.7);
+  overflow: visible;
+  cursor: pointer;
+}
+
+#pointsOptions:hover #Circle1 {
+  animation: perfilOptionsShake 0.5s 0s both;
+}
+
+#pointsOptions:hover #Circle2 {
+  animation: perfilOptionsShake 0.5s 0.2s both;
+}
+
+#pointsOptions:hover #Circle3 {
+  animation: perfilOptionsShake 0.5s 0.4s both;
+}
+
+#navMenu:checked ~ #menuContext {
+  top: 30px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.7);
+  min-width: max-content;
+  z-index: 10000;
+  visibility: visible;
+  height: auto !important;
+}
+
+#menuContext {
+  height: 0;
+  visibility: hidden;
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+}
+#menuContext ul {
+  display: flex;
+}
+#menuContext ul .active {
+  left: unset !important;
+  width: auto !important;
+  min-width: unset !important;
+  display: flex !important;
+}
+#menuContext ul #delete {
+  display: none;
+}
+#menuContext ul li {
+  padding: 2px 5px 2px 5px;
+  max-height: 30px !important;
+  font-weight: 300;
+  font-family: serif;
+}
+#menuContext ul li .container-svg {
+  transform: translate(-5px, -2px);
+  position: relative;
+}
+#menuContext ul li .container-svg svg {
+  transform: unset !important;
+  max-height: 30px;
+  min-height: 30px;
+}
+#menuContext ul #selectAll {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#menuContext ul #selectAll p {
+  margin: 0;
+}
+#menuContext ul #selectAll .checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+#menuContext ul #selectAll .checkbox input[type=checkbox] {
+  opacity: 0;
+  position: absolute;
+}
+#menuContext ul #selectAll .checkbox .checkmark {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+#menuContext ul #selectAll .checkbox input[type=checkbox]:checked + .checkmark {
+  background-color: #0078d4;
+  border-color: #0078d4;
+}
+#menuContext ul #selectAll .checkbox input[type=checkbox]:checked + .checkmark:after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: transform 0.2s ease;
+  transform: scale(1);
+}
+#menuContext ul #selectAll .checkbox .checkmark:after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: transparent;
+  transform: scale(0);
+  transition: transform 0.2s ease;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.calendar {
+  max-width: 350px;
+}
+.calendar .header-days {
+  font-family: "Lora", serif;
+  margin-bottom: 10px;
+}
+.calendar .calendar-body .day-cell {
+  border: 1px solid black;
+  border-radius: 50px;
+  width: 35px;
+  padding: 5px;
+  font-family: "Lora", serif;
+  cursor: pointer;
+}
+.calendar .calendar-body .day-cell-disable {
+  color: gray;
+  border: unset;
+}
+.calendar .calendar-body .day-cell-active {
+  background-color: rgba(111, 208, 203, 0.5);
+}
+.calendar .grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-row-gap: 10px;
+  text-align: center;
+  justify-items: center;
+}
+.calendar .control {
+  cursor: pointer;
+}
+.calendar .calendar-header span {
+  font-size: 1.5rem;
+  font-family: "Lora", serif;
 }
 
 .fs-1 {
@@ -667,9 +818,20 @@ nav ul li .container-svg {
   }
 }
 .form_active {
-  box-shadow: 0 0 0 2px rgba(23, 78, 165, 0.3725490196), 0 0 0 5px rgba(59, 131, 246, 0.3725490196);
+  box-shadow: 0 0 0 2px rgba(23, 78, 165, 0.3725490196), 0 0 0 5px rgba(59, 131, 246, 0.3725490196) !important;
 }
 
+@keyframes perfilOptionsShake {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-45%);
+  }
+  100% {
+    transform: unset;
+  }
+}
 .glass-light {
   backdrop-filter: blur(2px);
   background-color: rgba(255, 255, 255, 0.5) !important;
@@ -704,6 +866,9 @@ nav ul li .container-svg {
 }
 
 @media (min-width: 768px) {
+  #contains {
+    padding: 0.5rem !important;
+  }
   header #bars {
     display: none !important;
   }
@@ -711,7 +876,7 @@ nav ul li .container-svg {
     display: none;
   }
   #centerPanel {
-    border-radius: 15px 15px 0 0 !important;
+    border-radius: 15px !important;
   }
   #menuList {
     transition: none !important;
