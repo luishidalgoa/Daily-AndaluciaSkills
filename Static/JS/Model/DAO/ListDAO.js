@@ -16,13 +16,13 @@ class ListDAO{
 
     /**
      * creará una nueva lista begun exista o no. Sí existe. automáticamente, serializará todos sus objetos
-     * @param list nombre de la lista nueva o existente donde se guardaran los objetos o se creara
+     * @param list lista nueva o existente donde se guardaran los objetos o se creara
      */
     static save(list){
-        if(this.searchList(list.name)===null){
-            localStorage.setItem(list, JSON.stringify(new List(list,[])))
+        if(this.searchList(list.name)!==null){
+            localStorage.setItem(list.name, JSON.stringify(new List(list.name,[],list.svg)))
         }else{
-
+            localStorage.setItem(list, JSON.stringify(new List(list.name,[])));
         }
     }
 

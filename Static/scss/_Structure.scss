@@ -120,9 +120,10 @@ header {
 section {
   max-width: 100%;
   width: 100%;
-  overflow: auto;
   max-height: calc(100vh - 130px);
-
+  #TaskContainer .task:hover {
+    background-color: rgba(240, 240, 240, 1) !important;
+  }
   #TaskContainer {
     align-items: center;
 
@@ -136,19 +137,11 @@ section {
       display: block !important;
     }
 
-    :hover {
-      background-color: rgba(240, 240, 240, 1) !important;
-    }
-
     [tabindex="0"] {
       background-color: rgba(240, 240, 240, 1) !important;
     }
-
-    .task, .task * {
-      transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-
     .task {
+      transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       border-radius: 0.8rem;
       box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
       position: relative;
@@ -621,7 +614,7 @@ nav {
 
 .calendar {
   max-width: 350px;
-
+  background-color: white;
   .header-days {
     font-family: 'Lora', serif;
     margin-bottom: 10px;
@@ -649,7 +642,7 @@ nav {
   .grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-row-gap: 10px;
+    gap: 5px;
     text-align: center;
     justify-items: center;
   }

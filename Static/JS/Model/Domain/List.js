@@ -1,8 +1,8 @@
 class List {
-    constructor(name,tasks) {
+    constructor(name,tasks,svg='') {
         this.name = name;
         this.tasks = tasks;
-        this.svg='';
+        this.svg=svg;
     }
     changeList(Node){
         setTimeout(() => {
@@ -25,7 +25,7 @@ class List {
         return autoIncrement;
     }
     orderByAlphabet(){
-        
+
     }
     orderByDate(){
 
@@ -169,6 +169,25 @@ class List {
                 <span>`+list.name+`</span>
                 <span class="fs-6 p-1">` + list.tasks.length +`</span>
             </li>
+        `
+    }
+    getMenuContext(){
+        `
+        <form action="" class="shadow" id="menuContext">
+            <ul class="p-0 m-0 d-flex flex-column">
+                <li class="d-flex" id="selectAll">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <p>Select All</p>
+                </li>
+                <li id="delete" class="">
+                    <div class="container-svg"></div>
+                    <span>Delete</span>
+                </li>
+            </ul>
+        </form>
         `
     }
 }

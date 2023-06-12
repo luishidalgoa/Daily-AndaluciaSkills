@@ -40,7 +40,7 @@ class ControllerList {
      * @returns {Task} a continuation retornara el objeto de la nueva tarea creada
      */
     newTask(title) {
-        return new Task(this.list.newID(), title, "", "");
+        return new Task(this.list.newID(), title, "",moment());
     }
 
 
@@ -176,7 +176,6 @@ class ControllerList {
         });
         const btnDelete = document.querySelector('nav ul #delete')
         btnDelete.addEventListener('click', () => {
-            console.log(document.querySelectorAll('.task input:checked'))
             if (document.querySelectorAll('.task input[type="checkbox"]:checked').length > 0) {
                 animItem.play()
                 animItem.addEventListener('complete', () => {
