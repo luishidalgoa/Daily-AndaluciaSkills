@@ -8,7 +8,7 @@ class Calendar{
     }
     getHtml(){
         return `
-            <div class="calendar d-flex flex-column shadow-lg p-3 gap-2 rounded-3">
+            <div class="calendar d-flex flex-column shadow-lg p-3 gap-2 rounded-3" style="position: relative">
                 <div class="calendar-header d-flex justify-content-between">
                     <svg class="control" xmlns="http://www.w3.org/2000/svg" width="15.688" height="27.98" viewBox="0 0 15.688 27.98">
                         <path id="Path_39" data-name="Path 39" d="M32.9,32.8,19.88,19.078,32.9,6.58" transform="translate(-18.118 -5.678)" fill="none" stroke="#cacbd2" stroke-width="2.5"/>

@@ -25,7 +25,7 @@ class TasksDAO{
         const aux = JSON.parse(localStorage.getItem(listName));
         if (aux.tasks) {
             for (const task of aux.tasks) {
-                const newTask = new Task(task.id, task.Title, task.Note, "")
+                const newTask = new Task(task.id, task.Title,task.Note ,moment(task.Date,'DD-MMMM-YYYY')) //TRABAJAR CON DATE
                 result.push(newTask)
             }
         }
@@ -33,14 +33,16 @@ class TasksDAO{
     }
 
     static searchTask(listName,id) {
-        const list= JSON.parse(localStorage.getItem(listName))
-        if (list.tasks) {
-            for (const task of list.tasks) {
-                if('Task_'+task.id===id){
-                    return new Task(task.id, task.Title, task.Note, "")
+        const tasks= this.searchAll(listName)
+        let result = null
+        if (tasks!==null) {
+            for (const task of tasks) {
+                if(task.id==id){
+                    return new Task(task.id, task.Title, task.Note,moment(task.Date,'DD-MMMM-YYYY'))//TRABAJAR CON DATE
                 }
             }
         }
+        return result;
     }
     /**
      * Serializa una lista completa en el localStorage. Incluyendo sus tareas y demás campos. La impedancia de datos
@@ -54,12 +56,28 @@ class TasksDAO{
             const id = value.id.replace(/^Task_/, '')
             const text = value.querySelector('div span').textContent.replace(/\n+/g, '\n').trim()
             const note = value.querySelector('.TaskNote span').textContent.replace(/\n+/g, '\n').trim()
-            const date = ""
+            const date = moment()
             result.push(new Task(id, text, note, date))
         })
         list.tasks=result
         result=list;
         localStorage.setItem(list.name, JSON.stringify(result))
         return result;
+    }
+
+    /**
+     * Creará una copia de la tarea en la que se desea cambiar la fecha. De tal modo que la copia contendra la tarea con
+     * la fecha actualizada
+     * @param listName Nombre de la lista donde se ubica la tarea
+     * @param taskId Id de la tarea dentro de la lista
+     * @param Date Fecha de la tarea
+     * @returns {Task} Devuelve una tarea con la fecha actualizada
+     */
+    static saveDate(listName,taskId,Date){
+        const Task=this.searchTask(listName,taskId)
+        if(Task!==null){
+            Task.Date=Date;
+        }
+        return Task
     }
 }

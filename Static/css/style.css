@@ -106,8 +106,10 @@ header #bars .bars_active:nth-child(3) {
 section {
   max-width: 100%;
   width: 100%;
-  overflow: auto;
   max-height: calc(100vh - 130px);
+}
+section #TaskContainer .task:hover {
+  background-color: rgb(240, 240, 240) !important;
 }
 section #TaskContainer {
   align-items: center;
@@ -120,16 +122,11 @@ section #TaskContainer .is-dragging {
 section #TaskContainer :hover > .checkbox-wrapper-12 input {
   display: block !important;
 }
-section #TaskContainer :hover {
-  background-color: rgb(240, 240, 240) !important;
-}
 section #TaskContainer [tabindex="0"] {
   background-color: rgb(240, 240, 240) !important;
 }
-section #TaskContainer .task, section #TaskContainer .task * {
-  transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
 section #TaskContainer .task {
+  transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   border-radius: 0.8rem;
   box-shadow: -3px 5px 10px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -528,6 +525,7 @@ nav ul li .container-svg {
 
 .calendar {
   max-width: 350px;
+  background-color: white;
 }
 .calendar .header-days {
   font-family: "Lora", serif;
@@ -551,7 +549,7 @@ nav ul li .container-svg {
 .calendar .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-row-gap: 10px;
+  gap: 5px;
   text-align: center;
   justify-items: center;
 }
